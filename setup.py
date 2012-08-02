@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'klaviyo',
-    version = '0.9.0',
+    version = '0.9.1',
     packages = find_packages(),
 
     install_requires=[
