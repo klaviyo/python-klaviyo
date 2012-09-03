@@ -21,7 +21,7 @@ class Klaviyo(object):
         self.api_server = api_server
     
     def track(self, event, email=None, id=None, properties=None, customer_properties=None,
-        ip_address=None, is_test=False):
+        timestamp=None, ip_address=None, is_test=False):
         
         if email is None and id is None:
             raise KlaviyoException('You must identify a user by email or ID.')
@@ -40,12 +40,13 @@ class Klaviyo(object):
             'event' : event,
             'properties' : properties,
             'customer_properties' : customer_properties,
+            'time' : timestamp,
             'ip' : ip_address or '',
         }, is_test)
         return self._request(KLAVIYO_TRACKING_ENDPOINT, url_params)
     
     def track_once(self, event, email=None, id=None, properties=None, customer_properties=None,
-        ip_address=None, is_test=False):
+        timestamp=None, ip_address=None, is_test=False):
         
         if properties is None:
             properties = {}
@@ -76,7 +77,6 @@ class Klaviyo(object):
             KLAVIYO_DATA_VARIABLE : base64.b64encode(json.dumps(params)),
             'test' : 1 if is_test else 0,
         })
-
 
     def _request(self, path, params):
         server = self.api_server
