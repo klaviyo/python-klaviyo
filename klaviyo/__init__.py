@@ -1,6 +1,8 @@
 import urllib
 import base64
 import json
+import datetime
+import time
 
 import requests
 
@@ -35,15 +37,19 @@ class Klaviyo(object):
         if email: customer_properties['email'] = email
         if id: customer_properties['id'] = id
         
-        url_params = self._build_params({
+        params = {
             'token' : self.api_token,
             'event' : event,
             'properties' : properties,
             'customer_properties' : customer_properties,
-            'time' : timestamp,
-            'ip' : ip_address or '',
-        }, is_test)
-        return self._request(KLAVIYO_TRACKING_ENDPOINT, url_params)
+            'time' : self._normalize_timestamp(timestamp),
+        }
+
+        if ip_address:
+            params['ip'] = ip_address
+
+        query_string = self._build_query_string(params, is_test)
+        return self._request(KLAVIYO_TRACKING_ENDPOINT, query_string)
     
     def track_once(self, event, email=None, id=None, properties=None, customer_properties=None,
         timestamp=None, ip_address=None, is_test=False):
@@ -66,13 +72,19 @@ class Klaviyo(object):
         if email: properties['email'] = email
         if id: properties['id'] = id
         
-        url_params = self._build_params({
+        query_string = self._build_query_string({
             'token' : self.api_token,
             'properties' : properties,
         }, is_test)
-        return self._request(KLAVIYO_IDENTIFY_ENDPOINT, url_params)
+        return self._request(KLAVIYO_IDENTIFY_ENDPOINT, query_string)
     
-    def _build_params(self, params, is_test):
+    def _normalize_timestamp(self, timestamp):
+        if isinstance(timestamp, datetime.datetime):
+            timestamp = time.mktime(timestamp.timetuple())
+
+        return timestamp
+
+    def _build_query_string(self, params, is_test):
         return urllib.urlencode({
             KLAVIYO_DATA_VARIABLE : base64.b64encode(json.dumps(params)),
             'test' : 1 if is_test else 0,
