@@ -7,7 +7,7 @@ setup(
     packages = find_packages(),
 
     install_requires=[
-        'requests == 0.13.2',
+        'requests == 2.2.1',
     ],
 
     # metadata for upload to PyPI
