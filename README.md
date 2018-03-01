@@ -25,7 +25,7 @@ You can then easily use Klaviyo to track events or identify people:
     import klaviyo
 
     client = klaviyo.Klaviyo('YOUR_KLAVIYO_API_TOKEN')
-    
+
     # Track an event...
     client.track('Filled out profile', email='someone@example.com', properties={
         'Added social accounts' : False,
@@ -41,7 +41,7 @@ Note that in these examples, I'm using `email` as the identifier. You can use `e
     import klaviyo
 
     client = klaviyo.Klaviyo('YOUR_KLAVIYO_API_TOKEN')
-    
+
     # Track an event with ID
     client.track('Filled out profile', id=123)
 

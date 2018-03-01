@@ -1,13 +1,20 @@
+"""Klaviyo"""
 from django.conf import settings
 
+
 def is_trackable_response(request, response):
+    """is_trackable_response"""
     return is_html_response(response) and not request.is_ajax()
 
+
 def is_html_response(response):
+    """is_html_response"""
     return 'text/html' in response.get('Content-Type', '')
 
+
 def render_script(api_token):
-        return """<script text="text/javascript">
+    """render_script"""
+    return """<script text="text/javascript">
   var _learnq = _learnq || [];
   _learnq.push(['account', '%s']);
 
@@ -18,9 +25,12 @@ def render_script(api_token):
   })();
 </script>""" % api_token
 
+
 class KlaviyoSnippetMiddleware(object):
-    
+    """KlaviyoSnippetmiddleware"""
+
     def process_response(self, request, response):
+        """process_response"""
         try:
             api_token = settings.KLAVIYO_API_TOKEN
         except AttributeError:
