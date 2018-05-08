@@ -86,7 +86,7 @@ class Klaviyo(object):
 
     def _build_query_string(self, params, is_test):
         return urllib.parse.urlencode({
-            KLAVIYO_DATA_VARIABLE : base64.b64encode(json.dumps(params)),
+            KLAVIYO_DATA_VARIABLE : base64.b64encode(json.dumps(params).encode()),
             'test' : 1 if is_test else 0,
         })
 
