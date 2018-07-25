@@ -3,11 +3,11 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'klaviyo',
-    version = '1.0.0',
+    version = '1.0.1',
     packages = find_packages(),
 
     install_requires=[
-        'requests >= 2.2.1',
+        'requests>=2.17.0',
     ],
 
     # metadata for upload to PyPI
