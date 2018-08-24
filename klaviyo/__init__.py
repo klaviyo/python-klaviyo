@@ -357,5 +357,3 @@ class Klaviyo(object):
                     return response.json()
                 except ValueError:
                     return '1'
-
-

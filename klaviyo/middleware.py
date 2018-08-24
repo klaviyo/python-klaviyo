@@ -9,14 +9,14 @@ def is_html_response(response):
 def render_script(api_token):
         return """<script text="text/javascript">
   var _learnq = _learnq || [];
-  _learnq.push(['account', '%s']);
+  _learnq.push(['account', '{}']);
 
   (function () {
     var b = document.createElement('script'); b.type = 'text/javascript'; b.async = true;
     b.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'a.klaviyo.com/media/js/learnmarklet.js';
     var a = document.getElementsByTagName('script')[0]; a.parentNode.insertBefore(b, a);
   })();
-</script>""" % api_token
+</script>""".format(api_token)
 
 class KlaviyoSnippetMiddleware(object):
     

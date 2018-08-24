@@ -18,37 +18,105 @@ or
     pip install klaviyo
 
 
-## Tracking events in Python
+## API Examples
 
-You can then easily use Klaviyo to track events or identify people:
+After installing the klaviyo package you can initiate it using your public token which is for track events or identifying profiles and/or your private api key to utilize the metrics and list apis.
 
     import klaviyo
 
-    client = klaviyo.Klaviyo('YOUR_KLAVIYO_API_TOKEN')
-    
+    client = klaviyo.Klaviyo('public_token=YOUR_PUBLIC_TOKEN', private_token='PRIVATE_TOKEN')
+
+You can then easily use Klaviyo to track events or identify people.  Note, track and identify requests take your public token.
+
     # Track an event...
     client.track('Filled out profile', email='someone@example.com', properties={
         'Added social accounts' : False,
     })
+    
+    # you can also add profile properties
+    client.track(
+      'Filled out profile', 
+      email='someone@example.com', 
+      properties={
+        'Added social accounts' : False,
+      }, 
+      customer_properties={
+        '$first_name': 'Thomas',
+        '$last_name': 'Jefferson'
+      }
+    )
 
     # ...or just add a property to someone
-    client.identify(email='someone@example.com', properties={
+    client.identify(email='thomas.jefferson@example.com', properties={
+        '$first_name': 'Thomas',
+        '$last_name': 'Jefferson',
         'Plan' : 'Premium',
     })
 
-Note that in these examples, I'm using `email` as the identifier. You can use `email` or your own ID or both. Here are some examples:
+You can get metrics, a timeline of events and export analytics for a metric.  See here for more https://www.klaviyo.com/docs/api/metrics
 
-    import klaviyo
-
-    client = klaviyo.Klaviyo('YOUR_KLAVIYO_API_TOKEN')
+    # return all metrics
+    client.metrics()
     
-    # Track an event with ID
-    client.track('Filled out profile', id=123)
+    # you can paginate through using the page offset
+    client.metrics(page=1)
+    
+    
+    # return a timeline of all metrics
+    client.metric_timeline()
+    
+    # add a since param to get data 
+    # you can paginate through using a Unix timestamp or a UUID obtained from the next attribute
+    client.metric_timeline(since=since)
+    
+    # you can query a specific metric id by
+    client.metric_timeline(metric_id=metric_id)
+    
+    # you can export metric data
+    client.metric_export(metric_id)
+    
 
-    # Track an event with both ID and email
-    client.track('Shared item', email='someone@example.com', id=123, properties={
-        'Item type' : 'Photo',
-    })
+You can create, update, read, and delete lists.  See here for more information https://www.klaviyo.com/docs/api/v2/lists
+
+    # to get all lists
+    client.lists()
+    
+    # to add a new list
+    client.lists(
+      list_name = 'YOUR_LIST_NAME'  ,
+      method = 'POST'
+    )
+    
+    # get list details
+    client.list(list_id)
+    
+    # update list name
+    client.list(
+      list_id, 
+      list_name = 'NEW_LIST_NAME',
+      method = 'POST'
+    )
+    
+    # delete a list
+    client.list(
+        list_id,
+        method = 'DELETE'
+    )
+
+Note in the list_subscription call, subscription_type is either subscribe or members.  Please refer to the docs to see which method is correct https://www.klaviyo.com/docs/api/v2/lists#post-subscribe and https://www.klaviyo.com/docs/api/v2/lists#post-members
+
+    # subscribe members to a list and check if they're in a list
+    client.list_subscription('list_id', subscription_type, data=data, method="GET")
+    
+    # you can unsubscribe customers from a list
+    client.unsubscribe_from_list('list_id', subscription_type, emails)
+    
+    # get exclusion emails from a list - marker is used for paginating
+    client.list_exclusions('list_id', marker=None)
+    
+    # get all members in a group or list
+    client.all_members('group_id')
+    
 
 ## How to use it with a Django application?
 
