@@ -29,14 +29,14 @@ After installing the klaviyo package you can initiate it using your public token
 You can then easily use Klaviyo to track events or identify people.  Note, track and identify requests take your public token.
 
     # Track an event...
-    client.track('Filled out profile', email='someone@example.com', properties={
+    client.track('Filled out profile', email='someone@mailinator.com', properties={
         'Added social accounts' : False,
     })
     
     # you can also add profile properties
     client.track(
       'Filled out profile', 
-      email='someone@example.com', 
+      email='someone@mailinator.com', 
       properties={
         'Added social accounts' : False,
       }, 
@@ -47,7 +47,7 @@ You can then easily use Klaviyo to track events or identify people.  Note, track
     )
 
     # ...or just add a property to someone
-    client.identify(email='thomas.jefferson@example.com', properties={
+    client.identify(email='thomas.jefferson@mailinator.com', properties={
         '$first_name': 'Thomas',
         '$last_name': 'Jefferson',
         'Plan' : 'Premium',
