@@ -15,11 +15,7 @@ KLAVIYO_DATA_VARIABLE = 'data'
 PUBLIC_TOKEN_REQUESTS = ('identify', 'track')
 TRACK_ONCE_KEY = '__track_once__'
 
-METRIC = 'metric'
-METRICS = 'metrics'
 TIMELINE = 'timeline'
-
-SUBSCRIPTION_MEMBERS = ('subscribe', 'members')
 
 CUD_REQUEST_TYPE = ("DELETE", "POST", "PUT")
 
@@ -127,9 +123,9 @@ class Klaviyo(object):
         params = self._filter_params(params)
         
         if metric_id:
-            url = '{}/{}/{}'.format(METRIC, metric_id, TIMELINE)
+            url = '{}/{}/{}'.format('metric', metric_id, TIMELINE)
         else:
-            url = '{}/{}'.format(METRICS, TIMELINE)
+            url = '{}/{}'.format('metrics', TIMELINE)
 
         timeline = self._request(url, params)
         
@@ -199,7 +195,7 @@ class Klaviyo(object):
 
         return list_details
         
-    def list_subscription(self, list_id, subscription_type, data, method="GET"):
+    def list_subscription(self, list_id, data, subscription_type='subscribe', method="GET"):
         """
         args:
             list_id: str() the list id
@@ -208,12 +204,9 @@ class Klaviyo(object):
             
         """
         api_version = 'v2'
-        subscription_type = subscription_type.lower()
-        if subscription_type not in SUBSCRIPTION_MEMBERS:
-            raise KlaviyoException('The subscription type must be subscribe or members')
 
         if method.upper() == "GET":
-            if not isinstance(data, list) or not isinstance(data[0], str):
+            if not isinstance(data, list) or not  all(isinstance(s, str) for s in data):
                 raise KlaviyoException("Data must be a list of strings")
 
             params = {
@@ -233,7 +226,7 @@ class Klaviyo(object):
 
         return subscribed_members
     
-    def unsubscribe_from_list(self, list_id, subscription_type, emails):
+    def unsubscribe_from_list(self, list_id, emails, subscription_type='subscribe'):
         """
         args:
             list_id: str() the list id
@@ -241,9 +234,6 @@ class Klaviyo(object):
             emails: a list of emails
         """
         api_version = 'v2'
-        subscription_type = subscription_type.lower()
-        if subscription_type not in SUBSCRIPTION_MEMBERS:
-            raise KlaviyoException('The subscription type must be subscribe or members')
 
         params = {
             'emails': emails

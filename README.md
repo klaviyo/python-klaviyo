@@ -24,7 +24,7 @@ After installing the klaviyo package you can initiate it using your public token
 
     import klaviyo
 
-    client = klaviyo.Klaviyo('public_token=YOUR_PUBLIC_TOKEN', private_token='PRIVATE_TOKEN')
+    client = klaviyo.Klaviyo(public_token=PUBLIC_TOKEN, private_token=PRIVATE_TOKEN)
 
 You can then easily use Klaviyo to track events or identify people.  Note, track and identify requests take your public token.
 
