@@ -154,7 +154,7 @@ class Klaviyo(object):
         }
         params = self._filter_params(params)
         
-        url = '{}/{}/{}'.format(METRIC, metric_id, 'export')
+        url = '{}/{}/{}'.format('metric', metric_id, 'export')
         
         metric_export = self._request(url, params)
         
