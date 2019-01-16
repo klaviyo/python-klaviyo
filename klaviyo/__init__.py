@@ -238,7 +238,7 @@ class Klaviyo(object):
         params = {
             'emails': emails
         }
-        unsubscribed_emails = self._request('list/{}/subscribe'.format(list_id), params, method="DELETE", api_version=api_version)
+        unsubscribed_emails = self._request('list/{}/{}'.format(list_id, subscription_type), params, method="DELETE", api_version=api_version)
         
         return unsubscribed_emails
     
