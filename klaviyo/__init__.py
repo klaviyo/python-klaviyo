@@ -104,9 +104,8 @@ class Klaviyo(object):
             'page': page,
             'count': count
         }
-        metrics = self._request('metrics', params)
-        return metrics
-        
+        return self._request('metrics', params)
+
     def metric_timeline(self, metric_id=None, since=None, count=100, sort='desc'):
         """"
         args:
@@ -156,9 +155,7 @@ class Klaviyo(object):
         
         url = '{}/{}/{}'.format('metric', metric_id, 'export')
         
-        metric_export = self._request(url, params)
-        
-        return metric_export
+        return self._request(url, params)
 
     def lists(self, list_name=None, method='GET'):
         """
@@ -175,9 +172,8 @@ class Klaviyo(object):
             params = {
                 'list_name': list_name
             }
-            created_list = self._request('lists', params, method=method, api_version=api_version)
-            return created_list
-        
+            return self._request('lists', params, method=method, api_version=api_version)
+
     def list(self, list_id, list_name=None, method="GET",):
         """
         args:
@@ -212,8 +208,8 @@ class Klaviyo(object):
             params = {
                 'emails': data
             }
-            print(params)
-            subscribed_members = self._request('list/{}/{}'.format(list_id, subscription_type), params, api_version=api_version)
+
+            return self._request('list/{}/{}'.format(list_id, subscription_type), params, api_version=api_version)
 
         elif method.upper() == "POST":
             if not isinstance(data, list) or not isinstance(data[0], dict):
@@ -222,10 +218,8 @@ class Klaviyo(object):
             params = {
                 "profiles": data
             }
-            subscribed_members = self._request('list/{}/{}'.format(list_id, subscription_type), params, method=method, api_version=api_version)
+            return self._request('list/{}/{}'.format(list_id, subscription_type), params, method=method, api_version=api_version)
 
-        return subscribed_members
-    
     def unsubscribe_from_list(self, list_id, emails, subscription_type='subscribe'):
         """
         args:
@@ -249,10 +243,10 @@ class Klaviyo(object):
             marker: int() optional returned from the previous get call
         """
         api_version = 'v2'
-        excluded_members = self._request('list/{}/exclusions/all', {}, api_version=api_version)
+        params = self._build_marker_param(marker)
 
-        return excluded_members
-        
+        return self._request('list/{}/exclusions/all', params, api_version=api_version)
+
     def all_members(self, group_id, marker=None):
         """
         args:
@@ -260,8 +254,9 @@ class Klaviyo(object):
             marker: int() optional returned from the previous get call
         """
         api_version = 'v2'
-        all_members = self._request('group/{}/members/all'.format(group_id), {}, api_version=api_version)
-        return all_members
+        params = self._build_marker_param(marker)
+
+        return self._request('group/{}/members/all'.format(group_id), params, api_version=api_version)
 
     def _normalize_timestamp(self, timestamp):
         if isinstance(timestamp, datetime.datetime):
@@ -278,6 +273,11 @@ class Klaviyo(object):
     def _filter_params(self, params):
         return dict((k,v) for k,v in params.items() if v is not None)
 
+    def _build_marker_param(self, marker):
+        params = {}
+        if marker:
+            params['marker'] = marker
+        return params
 
     def _request(self, path, params, method="GET", api_version=None):
         headers = {
