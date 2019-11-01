@@ -23,7 +23,7 @@ class KlaviyoException(Exception):
     pass
 
 class Klaviyo(object):
-    API_VERSION = '2.0.3'
+    API_VERSION = '2.0.4'
     def __init__(self, public_token=None, private_token=None, api_server=KLAVIYO_API_SERVER):
         self.public_token = public_token
         self.private_token = private_token
