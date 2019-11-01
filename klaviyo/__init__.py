@@ -273,6 +273,7 @@ class Klaviyo(object):
             'count': count,
             'sort': sort
         }
+        params = self._filter_params(params)
 
         return self._request('person/{}/metrics/timeline'.format(profile_id), params)
         
@@ -290,6 +291,7 @@ class Klaviyo(object):
             'count': count,
             'sort': sort
         }
+        params = self._filter_params(params)
 
         return self._request('person/{}/metrics/{}/timeline'.format(profile_id, metric_id), params)
 
