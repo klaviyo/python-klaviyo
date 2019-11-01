@@ -106,17 +106,31 @@ You can create, update, read, and delete lists.  See here for more information h
 Note in the list_subscription call, subscription_type is either subscribe or members.  Please refer to the docs to see which method is correct https://www.klaviyo.com/docs/api/v2/lists#post-subscribe and https://www.klaviyo.com/docs/api/v2/lists#post-members
 
     # subscribe members to a list and check if they're in a list
-    client.list_subscription('list_id', subscription_type, data=data, method="GET")
+    client.list_subscription(list_id, subscription_type, data=data, method="GET")
     
     # you can unsubscribe customers from a list
-    client.unsubscribe_from_list('list_id', subscription_type, emails)
+    client.unsubscribe_from_list(list_id, subscription_type, emails)
     
     # get exclusion emails from a list - marker is used for paginating
-    client.list_exclusions('list_id', marker=None)
+    client.list_exclusions(list_id, marker=None)
     
     # get all members in a group or list
-    client.all_members('group_id')
+    client.all_members(group_id)
     
+You can fetch profile information given the profile ID
+
+    # get profile by profile_id
+    client.get_profile(profile_id)
+    
+    # get all metrics for a profile with the default kwargs
+    # to paginate the responses you will get a UUID returned from the response, see here for more information
+    # https://www.klaviyo.com/docs/api/people#metrics-timeline
+    client.get_profile_metrics_timeline(profile_id, since=None, count=100, sort='desc')
+
+    # get all metrics for a profile with the default kwargs
+    # to paginate the responses you will get a UUID returned from the response, see here for more information
+    # https://www.klaviyo.com/docs/api/people#metrics-timeline
+    client.get_profile_metric_timeline(profile_id, metric_id, since=None, count=100, sort='desc')
 
 ## How to use it with a Django application?
 
