@@ -290,7 +290,7 @@ class Klaviyo(object):
         }
         params = self._filter_params(params)
 
-        return self._request('person/{}/metrics/{}/timeline'.format(profile_id, metric_id), params)
+        return self._request('person/{}/metric/{}/timeline'.format(profile_id, metric_id), params)
 
     ######################
     # HELPER FUNCTIONS
