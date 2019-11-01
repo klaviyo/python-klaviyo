@@ -23,7 +23,7 @@ class KlaviyoException(Exception):
     pass
 
 class Klaviyo(object):
-    
+    API_VERSION = '2.0.3'
     def __init__(self, public_token=None, private_token=None, api_server=KLAVIYO_API_SERVER):
         self.public_token = public_token
         self.private_token = private_token
@@ -126,10 +126,8 @@ class Klaviyo(object):
         else:
             url = '{}/{}'.format('metrics', TIMELINE)
 
-        timeline = self._request(url, params)
-        
-        return timeline
-    
+        return self._request(url, params)
+
     def metric_export(
         self, 
         metric_id, 
@@ -187,10 +185,8 @@ class Klaviyo(object):
             "list_name": list_name
         }
         params = self._filter_params(params)
-        list_details = self._request('list/{}'.format(list_id), params, method=method, api_version=api_version)
+        return self._request('list/{}'.format(list_id), params, method=method, api_version=api_version)
 
-        return list_details
-        
     def list_subscription(self, list_id, data, subscription_type='subscribe', method="GET"):
         """
         args:
@@ -258,6 +254,48 @@ class Klaviyo(object):
 
         return self._request('group/{}/members/all'.format(group_id), params, api_version=api_version)
 
+    ######################
+    # PROFILE API
+    ######################
+    def get_profile(self, profile_id):
+        return self._request('person/{}'.format(profile_id))
+
+    def get_profile_metrics_timeline(self, profile_id, since=None, count=100, sort='desc'):
+        """
+        args:
+            profile_id (str): unique id for profile
+            since (unix timestamp int or uuid str): a timestamp or uuid
+            count (int): the batch of records the response should return
+            sort (str): the order in which results should be returned
+        """
+        params = {
+            'since': since,
+            'count': count,
+            'sort': sort
+        }
+
+        return self._request('person/{}/metrics/timeline'.format(profile_id), params)
+        
+    def get_profile_metric_timeline(self, profile_id, metric_id, since=None, count=100, sort='desc'):
+        """
+        args:
+            profile_id (str): unique id for profile
+            metric_id (str): unique id for metric
+            since (unix timestamp int or uuid str): a timestamp or uuid
+            count (int): the batch of records the response should return
+            sort (str): the order in which results should be returned
+        """
+        params = {
+            'since': since,
+            'count': count,
+            'sort': sort
+        }
+
+        return self._request('person/{}/metrics/{}/timeline'.format(profile_id, metric_id), params)
+
+    ######################
+    # HELPER FUNCTIONS
+    ######################
     def _normalize_timestamp(self, timestamp):
         if isinstance(timestamp, datetime.datetime):
             timestamp = time.mktime(timestamp.timetuple())
@@ -279,9 +317,21 @@ class Klaviyo(object):
             params['marker'] = marker
         return params
 
-    def _request(self, path, params, method="GET", api_version=None):
+    def _request(self, path, params={}, method="GET", api_version=None):
+        """
+        A request helper method
+        # TODO we should break this up to do v1_request, v2_request
+        Args:
+            path (str): the api endpoint to make a request to
+            params (dict): query params for the api
+            method (str): HTTP methods
+            api_version (str): Klaviyo api version
+        Returns:
+            (Klaviyo API Response): depending on the call this could be a dictionary, list of dicts, or boolean
+        """
         headers = {
             'Content-Type': "application/json",
+            'User-Agent': 'Klaviyo/Python {}'.format(self.API_VERSION)
         }
         if not api_version:
             api_version = 'v1'
