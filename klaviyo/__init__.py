@@ -163,8 +163,7 @@ class Klaviyo(object):
         """
         api_version = 'v2'
         if method.upper() == 'GET':
-            lists = self._request('lists', {}, api_version=api_version)
-            return lists
+            return self._request('lists', api_version=api_version)
 
         elif method.upper() == 'POST':
             params = {
@@ -228,10 +227,8 @@ class Klaviyo(object):
         params = {
             'emails': emails
         }
-        unsubscribed_emails = self._request('list/{}/{}'.format(list_id, subscription_type), params, method="DELETE", api_version=api_version)
-        
-        return unsubscribed_emails
-    
+        return self._request('list/{}/{}'.format(list_id, subscription_type), params, method="DELETE", api_version=api_version)
+
     def list_exclusions(self, list_id, marker=None):
         """
         args:
