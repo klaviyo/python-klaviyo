@@ -19,13 +19,13 @@ class KlaviyoApiException(Exception):
         self.message = self._process_message(response)
 
     def _process_message(self, response):
-        """
+        """Creates the message attribute based on the response.
 
         Args:
-            response:
+            response (Response obj): Information about the HTTP Response.
 
         Returns:
-
+            A dict or text of the response failure.
         """
         message = str()
         try:
