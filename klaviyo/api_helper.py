@@ -40,6 +40,8 @@ class KlaviyoAPI(object):
     HTTP_POST = 'post'
     HTTP_PUT = 'put'
 
+    PUBLIC_API_RESPONSES = ('0', '1', )
+
     # TYPE OF API METHOD
     PRIVATE = 'private'
     PUBLIC = 'public'
@@ -101,7 +103,14 @@ class KlaviyoAPI(object):
         return dict((k, v) for k, v in params.items() if v is not None)
 
     def _build_marker_param(self, marker):
-        """ A helper for the marker param """
+        """Creates a dictionary with the offset.
+
+        Args:
+            marker (int): Offset for the next request
+
+        Returns:
+            (dict): Information containing the offset.
+        """
         params = {}
         if marker:
             params[self.MARKER] = marker
@@ -209,16 +218,22 @@ class KlaviyoAPI(object):
             params=params,
             data=data
         )
-        return self._handle_response(response, request_type)
+        return self._handle_response(response)
 
-    def _handle_response(self, response, request_type):
+    def _handle_response(self, response):
         """Handles api HTTP response and validates.
 
         Args:
-            response (Response):
-            request_type (str):
+            response (Response): Http response object.
 
         Returns:
+            (KlaviyoApiResponse): Information about the response.
+
+        Raises:
+            (KlaviyoAuthenticationError): 403 authentication error.
+            (KlaviyoRateLimitException): 429 rate limit.
+            (KlaviyoServerError): 5XX Server error.
+            (KlaviyoApiException): A catch all for all other status codes.
 
         """
         status_code = response.status_code
@@ -231,13 +246,7 @@ class KlaviyoAPI(object):
         elif status_code != 200:
             raise KlaviyoApiException(status_code, response)
 
-        # return the json response from a private call
-        if request_type == self.PRIVATE:
-            return self.__handle_200_response(response, status_code)
-
-        # we return the str 1 or 0 for track/identify calls
-        elif request_type == self.PUBLIC:
-            return response.text
+        return self.__handle_200_response(response, status_code)
 
     def __handle_200_response(self, response, status_code):
         """Determines how to handle a 200 http response.
@@ -245,14 +254,15 @@ class KlaviyoAPI(object):
         Args:
             response (obj): Requests object.
             status_code (int): HTTP status code.
+
         Returns:
-            (json or http ok)
+            (KlaviyoApiResponse): Information about the response.
         """
         try:
             return KlaviyoAPIResponse(status_code, response.json())
         except (simplejson.JSONDecodeError, ValueError) as e:
             # it's kinda bad that we just do this, but need to return if it's a 200
-            if response.text == self.EMPTY_RESPONSE:
+            if response.text == self.EMPTY_RESPONSE or response.text in self.PUBLIC_API_RESPONSES:
                 return KlaviyoAPIResponse(status_code, response.text)
             else:
                 raise KlaviyoApiException(

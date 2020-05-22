@@ -48,8 +48,8 @@ class TestKlaviyoAPI(KlaviyoAPIFixture):
 
     def test_handle_response_with_auth_error(self, mock_response_auth_error, mock_request_type_private):
         with pytest.raises(KlaviyoAuthenticationError):
-            self.api._handle_response(mock_response_auth_error, mock_request_type_private)
+            self.api._handle_response(mock_response_auth_error)
 
     def test_handle_response_with_rate_limit_error(self, mock_response_rate_limit_error, mock_request_type_private):
         with pytest.raises(KlaviyoRateLimitException):
-            self.api._handle_response(mock_response_rate_limit_error, mock_request_type_private)
+            self.api._handle_response(mock_response_rate_limit_error)
