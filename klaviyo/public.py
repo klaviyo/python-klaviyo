@@ -22,6 +22,7 @@ class Public(KlaviyoAPI):
         is_test=False
         ):
         """Will create an event (metric) in Klaviyo.
+        https://www.klaviyo.com/docs/http-api#track
 
         Args:
             event (str): Event name to be tracked.
@@ -101,6 +102,7 @@ class Public(KlaviyoAPI):
     def identify(self, email=None, id=None, properties={}, is_test=False):
         """Makes an identify call to Klaviyo API.
         This will create/update a user with its associated customer properties.
+        https://www.klaviyo.com/docs/http-api#identify
 
         Args:
             email (str or None): Email address.
