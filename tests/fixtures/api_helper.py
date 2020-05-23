@@ -5,7 +5,7 @@ from klaviyo.api_helper import KlaviyoAPI
 
 class KlaviyoAPIFixture:
     API_SETTINGS = {
-        'public_token': 'abcdef',
+        'public_token': 'qw123qw123qw123',
         'private_token': 'pk_flintstones'
     }
 

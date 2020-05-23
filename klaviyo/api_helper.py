@@ -211,13 +211,13 @@ class KlaviyoAPI(object):
             'Content-Type': 'application/json',
             'User-Agent': 'Klaviyo-Python/{}'.format(__version__)
         }
-
         response = getattr(requests, method.lower())(
             url,
             headers=headers,
             params=params,
             data=data
         )
+
         return self._handle_response(response)
 
     def _handle_response(self, response):
