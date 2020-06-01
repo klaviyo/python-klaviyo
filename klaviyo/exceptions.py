@@ -11,9 +11,9 @@ class KlaviyoConfigurationException(KlaviyoException):
     pass
 
 
-class KlaviyoApiException(Exception):
+class KlaviyoAPIException(Exception):
     def __init__(self, status_code, response):
-        super(KlaviyoApiException, self).__init__('Failed with status code: {}'.format(status_code))
+        super(KlaviyoAPIException, self).__init__('Failed with status code: {}'.format(status_code))
         self.status_code = status_code
         self.response = response
         self.message = self._process_message(response)
@@ -35,14 +35,14 @@ class KlaviyoApiException(Exception):
         return message
 
 
-class KlaviyoAuthenticationError(KlaviyoApiException):
+class KlaviyoAuthenticationError(KlaviyoAPIException):
     pass
 
 
-class KlaviyoRateLimitException(KlaviyoApiException):
+class KlaviyoRateLimitException(KlaviyoAPIException):
     pass
 
 
-class KlaviyoServerError(KlaviyoApiException):
+class KlaviyoServerError(KlaviyoAPIException):
     pass
 

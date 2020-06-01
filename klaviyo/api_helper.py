@@ -13,8 +13,8 @@ except ImportError:
    from urllib import urlencode
 
 from .exceptions import (
-    KlaviyoApiException,
-    KlaviyoConfigurationException, KlaviyoException,
+    KlaviyoAPIException,
+    KlaviyoConfigurationException,
     KlaviyoAuthenticationError, KlaviyoRateLimitException,
     KlaviyoServerError,
 )
@@ -236,7 +236,7 @@ class KlaviyoAPI(object):
             (KlaviyoAuthenticationError): 403 authentication error.
             (KlaviyoRateLimitException): 429 rate limit.
             (KlaviyoServerError): 5XX Server error.
-            (KlaviyoApiException): A catch all for all other status codes.
+            (KlaviyoAPIException): A catch all for all other status codes.
 
         """
         status_code = response.status_code
@@ -247,7 +247,7 @@ class KlaviyoAPI(object):
         elif status_code in (500, 503, ):
             raise KlaviyoServerError(status_code, response)
         elif status_code != 200:
-            raise KlaviyoApiException(status_code, response)
+            raise KlaviyoAPIException(status_code, response)
 
         return self.__handle_200_response(response, status_code)
 
@@ -268,7 +268,7 @@ class KlaviyoAPI(object):
             if response.text == self.EMPTY_RESPONSE or response.text in self.PUBLIC_API_RESPONSES:
                 return KlaviyoAPIResponse(status_code, response.text)
             else:
-                raise KlaviyoApiException(
+                raise KlaviyoAPIException(
                     message='Request did not return json: {}'.format(e),
                     status_code=status_code,
                     response=response
