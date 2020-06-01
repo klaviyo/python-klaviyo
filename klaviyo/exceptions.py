@@ -7,7 +7,7 @@ class KlaviyoException(Exception):
         self.message = message
 
 
-class KlaviyoConfigurationException(Exception):
+class KlaviyoConfigurationException(KlaviyoException):
     pass
 
 
@@ -33,7 +33,6 @@ class KlaviyoApiException(Exception):
         except (simplejson.JSONDecodeError, ValueError) as e:
             message = response.text
         return message
-
 
 
 class KlaviyoAuthenticationError(KlaviyoApiException):

@@ -33,6 +33,7 @@ class KlaviyoAPI(object):
     V1_API = 'v1'
     V2_API = 'v2'
     EMPTY_RESPONSE = ''
+    API_KEY = 'api_key'
 
     # HTTP METHODS
     HTTP_DELETE = 'delete'
@@ -157,7 +158,7 @@ class KlaviyoAPI(object):
             path,
         )
         data.update({
-            'api_key': self.private_token
+            self.API_KEY: self.private_token
         })
         data = json.dumps(data)
 
@@ -178,9 +179,11 @@ class KlaviyoAPI(object):
             self.V1_API,
             path,
         )
-        formatted_url = '{}?api_key={}'.format(url, self.private_token)
+        params.update({
+            self.API_KEY: self.private_token
+        })
 
-        return self._request(method, formatted_url, params)
+        return self._request(method, url, params)
 
     def _public_request(self, path, querystring):
         """Track and identify calls, always a get request.

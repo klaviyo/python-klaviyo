@@ -6,6 +6,7 @@ class Profiles(KlaviyoAPI):
 
     def get_profile(self, profile_id):
         """Get a profile by its ID.
+
         https://www.klaviyo.com/docs/api/people#person
 
         Args:
@@ -18,6 +19,7 @@ class Profiles(KlaviyoAPI):
 
     def update_profile(self, profile_id, properties={}):
         """Get a profile by its ID.
+
         https://www.klaviyo.com/docs/api/people#person
 
         Args:
@@ -31,6 +33,7 @@ class Profiles(KlaviyoAPI):
 
     def get_profile_metrics_timeline(self, profile_id, since=None, count=100, sort=KlaviyoAPI.SORT_DESC):
         """Gets a timeline of events on a profile.
+
         https://www.klaviyo.com/docs/api/people#metrics-timeline
 
         Args:
@@ -61,6 +64,7 @@ class Profiles(KlaviyoAPI):
 
     def get_profile_metrics_timeline_by_id(self, profile_id, metric_id, since=None, count=100, sort=KlaviyoAPI.SORT_DESC):
         """Gets a profiles event data for one metric.
+
         https://www.klaviyo.com/docs/api/people#metric-timeline
 
         Args:

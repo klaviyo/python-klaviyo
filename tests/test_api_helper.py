@@ -17,7 +17,7 @@ class TestKlaviyoAPI(KlaviyoAPIFixture):
 
     def test_build_marker_param(self, mock_marker_param):
         params = self.api._build_marker_param(mock_marker_param)
-        assert params['marker'] == 2000
+        assert params[self.api.MARKER] == 2000
 
     def test_build_query_string(self, mock_params):
         query_string = self.api._build_query_string(mock_params, False)

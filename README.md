@@ -111,7 +111,7 @@ You can create, update, read, and delete lists.  See here for more information h
         profiles: is list of objects formatted like {'email': EMAIL, 'custom_property': NAME}
      
     # Check email address subscription status to a list
-    client.Lists.get_list_subscription_status(list_id, emails)
+    client.Lists.get_subscribers_from_list(list_id, emails)
         emails: is a list of email addresses
     
     # Unsubscribe and remove profile from a list
@@ -123,11 +123,11 @@ You can create, update, read, and delete lists.  See here for more information h
         profiles: is list of objects formatted like {'email': EMAIL, 'custom_property': NAME}
         
     # Check email addresses if they're in a list
-    client.Lists.get_list_membership_status(list_id_, emails)
+    client.Lists.get_members_from_list(list_id_, emails)
         emails: is a list of email addresses
      
     # Remove emails from a list
-    client.Lists.delete_list_membership_status(list_id, emails)
+    client.Lists.remove_members_from_list(list_id, emails)
         emails:  a list of email addresses
     
     # get exclusion emails from a list - marker is used for paginating

@@ -22,6 +22,7 @@ class Public(KlaviyoAPI):
         is_test=False
         ):
         """Will create an event (metric) in Klaviyo.
+
         https://www.klaviyo.com/docs/http-api#track
 
         Args:
@@ -101,6 +102,7 @@ class Public(KlaviyoAPI):
 
     def identify(self, email=None, id=None, properties={}, is_test=False):
         """Makes an identify call to Klaviyo API.
+
         This will create/update a user with its associated customer properties.
         https://www.klaviyo.com/docs/http-api#identify
 
@@ -112,7 +114,7 @@ class Public(KlaviyoAPI):
         Returns:
             (str): 1 (pass) or 0 (fail)
         """
-        if email is None and id is None:
+        if not email and not id:
             raise KlaviyoException('You must identify a user by email or ID.')
 
         if not isinstance(properties, dict):

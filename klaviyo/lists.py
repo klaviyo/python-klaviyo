@@ -11,12 +11,14 @@ class Lists(KlaviyoAPI):
 
     def get_lists(self):
         """Returns a list of Klaviyo lists
-        https://www.klaviyo.com/docs/api/v2/lists#post-lists
+
+        https://www.klaviyo.com/docs/api/v2/lists#get-lists
         """
         return self._v2_request(self.LISTS, self.HTTP_GET)
     
     def create_list(self, list_name):
         """This will create a new list in Klaviyo.
+
         https://www.klaviyo.com/docs/api/v2/lists#post-lists
 
         Args:
@@ -31,6 +33,7 @@ class Lists(KlaviyoAPI):
 
     def get_list_by_id(self, list_id):
         """This will fetch a list by its ID.
+
         https://www.klaviyo.com/docs/api/v2/lists#get-list
 
         Args:
@@ -42,6 +45,7 @@ class Lists(KlaviyoAPI):
     
     def update_list_name_by_id(self, list_id, list_name):
         """This allows you to update a list's name.
+
         https://www.klaviyo.com/docs/api/v2/lists#put-list
 
         Args:
@@ -62,6 +66,7 @@ class Lists(KlaviyoAPI):
         
     def delete_list(self, list_id):
         """Deletes a list by its ID.
+
         https://www.klaviyo.com/docs/api/v2/lists#delete-list
 
         Args:
@@ -77,6 +82,7 @@ class Lists(KlaviyoAPI):
 
     def add_subscribers_to_list(self, list_id, profiles):
         """Uses the subscribe endpoint to subscribe user to list, this obeys the list settings.
+
         https://www.klaviyo.com/docs/api/v2/lists#post-subscribe
 
         Args:
@@ -84,7 +90,7 @@ class Lists(KlaviyoAPI):
             profiles (list of dict): List of dicts containing profile info.
                 [{
                     'email': email_address,
-                    // key:value profile properties
+                    # key:value profile properties
                 }]
 
         Returns:
@@ -95,8 +101,9 @@ class Lists(KlaviyoAPI):
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_POST, params)
 
-    def get_list_subscription_status(self, list_id, emails):
+    def get_subscribers_from_list(self, list_id, emails):
         """Check if profiles are on a list and not suppressed.
+
         https://www.klaviyo.com/docs/api/v2/lists#get-subscribe
 
         Args:
@@ -114,11 +121,12 @@ class Lists(KlaviyoAPI):
 
     def delete_subscribers_from_list(self, list_id, emails):
         """Delete and remove profiles from list.
+
         https://www.klaviyo.com/docs/api/v2/lists#delete-subscribe
 
         Args:
-            list_id (str): The list id
-            emails (list): A list of email addresses
+            list_id (str): The list id.
+            emails (list): A list of email addresses.
 
         Returns:
             Empty str if successful.
@@ -131,6 +139,7 @@ class Lists(KlaviyoAPI):
 
     def add_members_to_list(self, list_id, profiles):
         """Adds a member to a list regardless of opt-in settings.
+
         https://www.klaviyo.com/docs/api/v2/lists#post-members
 
         Args:
@@ -138,7 +147,7 @@ class Lists(KlaviyoAPI):
             profiles (list of dict): List of dicts containing profile info.
                 [{
                     'email': email_address,
-                    // key:value profile properties
+                    # key:value profile properties
                 }]
 
         Returns:
@@ -149,8 +158,9 @@ class Lists(KlaviyoAPI):
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_POST, params)
 
-    def get_list_membership_status(self, list_id, emails):
+    def get_members_from_list(self, list_id, emails):
         """Check if profiles are on a list.
+
         https://www.klaviyo.com/docs/api/v2/lists#get-members
 
         Args:
@@ -166,8 +176,9 @@ class Lists(KlaviyoAPI):
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_GET, params)
 
-    def delete_list_membership_status(self, list_id, emails):
+    def remove_members_from_list(self, list_id, emails):
         """Remove profiles from a list.
+
         https://www.klaviyo.com/docs/api/v2/lists#delete-members
 
         Args:
@@ -185,10 +196,11 @@ class Lists(KlaviyoAPI):
 
     def get_list_exclusions(self, list_id, marker=None):
         """Get all of the emails that have been excluded from a list along with the exclusion reason and exclusion time.
+
         https://www.klaviyo.com/docs/api/v2/lists#get-exclusions-all
 
         Args:
-            list_id (str):The list id.
+            list_id (str): The list id.
             marker (int): Pagination mechanism offset.
 
         Returns:
@@ -200,6 +212,7 @@ class Lists(KlaviyoAPI):
 
     def get_all_members(self, group_id, marker=None):
         """Get all of the emails in a given list or segment.
+
         https://www.klaviyo.com/docs/api/v2/lists#get-members-all
 
         Args:

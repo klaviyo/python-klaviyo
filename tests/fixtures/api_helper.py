@@ -76,7 +76,7 @@ class KlaviyoAPIFixture:
 
     @pytest.fixture
     def mock_url(self):
-        return ' https://a.klaviyo.com/api/v2/lists'
+        return 'https://a.klaviyo.com/api/v2/lists'
 
     @pytest.fixture
     def mock_response_auth_error(self):

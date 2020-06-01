@@ -1,9 +1,5 @@
 from .api_helper import KlaviyoAPI
 
-STARTING_PAGE = 0
-DEFAULT_BATCH_SIZE = 50
-TIMELINE_BATCH_SIZE = DEFAULT_BATCH_SIZE + DEFAULT_BATCH_SIZE
-
 
 class Metrics(KlaviyoAPI):
     EXPORT = 'export'
@@ -15,8 +11,13 @@ class Metrics(KlaviyoAPI):
     BY = 'by'
     WHERE = 'where'
 
+    STARTING_PAGE = 0
+    DEFAULT_BATCH_SIZE = 50
+    TIMELINE_BATCH_SIZE = DEFAULT_BATCH_SIZE + DEFAULT_BATCH_SIZE
+
     def get_metrics(self, page=STARTING_PAGE, count=DEFAULT_BATCH_SIZE):
         """Fetches all metrics inside of an account.
+
         https://www.klaviyo.com/docs/api/metrics#metrics
 
         Args:
@@ -34,6 +35,7 @@ class Metrics(KlaviyoAPI):
     
     def get_metrics_timeline(self, since=None, count=TIMELINE_BATCH_SIZE, sort=KlaviyoAPI.SORT_DESC):
         """"Fetches all of the metrics and its events regardless of the statistic.
+
         https://www.klaviyo.com/docs/api/metrics#metrics-timeline
 
         Args:
@@ -57,6 +59,7 @@ class Metrics(KlaviyoAPI):
         
     def get_metric_timeline_by_id(self, metric_id, since=None, count=TIMELINE_BATCH_SIZE, sort=KlaviyoAPI.SORT_DESC):
         """"Returns a timeline of events for a specific metric.
+
         https://www.klaviyo.com/docs/api/metrics#metric-timeline
 
         Args:
@@ -90,6 +93,7 @@ class Metrics(KlaviyoAPI):
         count=None
         ):
         """Exports metric values (counts, uniques, totals).
+
         https://www.klaviyo.com/docs/api/metrics#metric-export
 
         Args:
