@@ -20,6 +20,7 @@ from .exceptions import (
 )
 from klaviyo import __version__
 
+
 class KlaviyoAPIResponse(object):
     def __init__(self, status_code, data):
         self.status_code = status_code
