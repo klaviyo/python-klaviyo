@@ -7,16 +7,8 @@ def is_html_response(response):
     return 'text/html' in response.get('Content-Type', '')
 
 def render_script(api_token):
-        return """<script text="text/javascript">
-  var _learnq = _learnq || [];
-  _learnq.push(['account', '{}']);
+        return """<script type="text/javascript" async src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id={}"></script>""".format(api_token)
 
-  (function () {
-    var b = document.createElement('script'); b.type = 'text/javascript'; b.async = true;
-    b.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'a.klaviyo.com/media/js/learnmarklet.js';
-    var a = document.getElementsByTagName('script')[0]; a.parentNode.insertBefore(b, a);
-  })();
-</script>""".format(api_token)
 
 class KlaviyoSnippetMiddleware(object):
     

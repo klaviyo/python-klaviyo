@@ -1,18 +1,18 @@
 #!/usr/bin/python
 from setuptools import setup, find_packages
-
+from klaviyo import __version__
 setup(
     name = 'klaviyo',
-    version = '2.0.4',
+    version = __version__,
     packages = find_packages(),
-
     install_requires=[
         'requests >= 2.2.1',
+        'simplejson >= 3.17.0',
     ],
 
     # metadata for upload to PyPI
     author = 'Klaviyo',
-    author_email = 'support@klaviyo.com',
+    author_email = 'successengineers@klaviyo.com',
     description = "Python API for Klaviyo",
     long_description = (
 """

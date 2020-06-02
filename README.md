@@ -29,12 +29,12 @@ After installing the klaviyo package you can initiate it using your public token
 You can then easily use Klaviyo to track events or identify people.  Note, track and identify requests take your public token.
 
     # Track an event...
-    client.track('Filled out profile', email='someone@mailinator.com', properties={
+    client.Public.track('Filled out profile', email='someone@mailinator.com', properties={
         'Added social accounts' : False,
     })
     
     # you can also add profile properties
-    client.track(
+    client.Public.track(
       'Filled out profile', 
       email='someone@mailinator.com', 
       properties={
@@ -47,7 +47,7 @@ You can then easily use Klaviyo to track events or identify people.  Note, track
     )
 
     # ...or just add a property to someone
-    client.identify(email='thomas.jefferson@mailinator.com', properties={
+    client.Public.identify(email='thomas.jefferson@mailinator.com', properties={
         '$first_name': 'Thomas',
         '$last_name': 'Jefferson',
         'Plan' : 'Premium',
@@ -56,81 +56,107 @@ You can then easily use Klaviyo to track events or identify people.  Note, track
 You can get metrics, a timeline of events and export analytics for a metric.  See here for more https://www.klaviyo.com/docs/api/metrics
 
     # return all metrics
-    client.metrics()
-    
-    # you can paginate through using the page offset
-    client.metrics(page=1)
-    
+    client.Metrics.get_metrics()
+      args/kwargs:
+        page=0
+        count=50
     
     # return a timeline of all metrics
-    client.metric_timeline()
+    client.Metrics.get_metrics_timeline()
+      args/kwargs:
+        since=None (unix or returned uuid from request)
+        count=100
+        sort='desc'
+
+    # you can query for a specific metric id
+    client.Metrics.get_metric_timeline_by_id(metric_id)
+      args/kwargs:
+        since=None (unix or returned uuid)
+        count=50
+        sort='desc'
     
-    # add a since param to get data 
-    # you can paginate through using a Unix timestamp or a UUID obtained from the next attribute
-    client.metric_timeline(since=since)
-    
-    # you can query a specific metric id by
-    client.metric_timeline(metric_id=metric_id)
-    
-    # you can export metric data
-    client.metric_export(metric_id)
-    
+    Export metric specific values
+    client.Metrics.get_metric_export(metric_id)
+      args/kwargs:
+        start_date
+        end_date
+        unit
+        measurement
+        where 
+        by
+        count
 
 You can create, update, read, and delete lists.  See here for more information https://www.klaviyo.com/docs/api/v2/lists
 
     # to get all lists
-    client.lists()
+    client.Lists.get_lists()
     
     # to add a new list
-    client.lists(
-      list_name = 'YOUR_LIST_NAME'  ,
-      method = 'POST'
-    )
+    client.Lists.create_list(list_name)
     
     # get list details
-    client.list(list_id)
+    client.Lists.get_list_by_id(list_id)
     
     # update list name
-    client.list(
+    client.Lists.update_list_name_by_id(
       list_id, 
-      list_name = 'NEW_LIST_NAME',
-      method = 'POST'
+      list_name='NEW_LIST_NAME',
     )
     
     # delete a list
-    client.list(
-        list_id,
-        method = 'DELETE'
-    )
-
-Note in the list_subscription call, subscription_type is either subscribe or members.  Please refer to the docs to see which method is correct https://www.klaviyo.com/docs/api/v2/lists#post-subscribe and https://www.klaviyo.com/docs/api/v2/lists#post-members
-
-    # subscribe members to a list and check if they're in a list
-    client.list_subscription(list_id, subscription_type, data=data, method="GET")
+    client.Lists.delete_list(list_id)
     
-    # you can unsubscribe customers from a list
-    client.unsubscribe_from_list(list_id, subscription_type, emails)
+    # Add subscribers to a list, this will follow the lists double opt in settings
+    client.Lists.add_subscribers_to_list(list_id, profiles)
+        profiles: is list of objects formatted like {'email': EMAIL, 'custom_property': NAME}
+     
+    # Check email address subscription status to a list
+    client.Lists.get_subscribers_from_list(list_id, emails)
+        emails: is a list of email addresses
+    
+    # Unsubscribe and remove profile from a list
+    client.Lists.delete_subscribers_from_list(list_id, emails)
+        emails: is a list of email addresses 
+
+    # Add members to a list, this doesn't care about the list double opt in setting
+    client.Lists.add_members_to_list(list_id, profiles)
+        profiles: is list of objects formatted like {'email': EMAIL, 'custom_property': NAME}
+        
+    # Check email addresses if they're in a list
+    client.Lists.get_members_from_list(list_id_, emails)
+        emails: is a list of email addresses
+     
+    # Remove emails from a list
+    client.Lists.remove_members_from_list(list_id, emails)
+        emails:  a list of email addresses
     
     # get exclusion emails from a list - marker is used for paginating
-    client.list_exclusions(list_id, marker=None)
+    client.Lists.get_list_exclusions(list_id, marker=None)
     
     # get all members in a group or list
-    client.all_members(group_id)
+    client.Lists.get_all_members(group_id, marker=None)
     
 You can fetch profile information given the profile ID
 
     # get profile by profile_id
-    client.get_profile(profile_id)
+    client.Profiles.get_profile(profile_id)
+    
+    # update a profile
+    client.Profiles.update_profile(profile_id, properties) # properties is a dict
     
     # get all metrics for a profile with the default kwargs
     # to paginate the responses you will get a UUID returned from the response, see here for more information
     # https://www.klaviyo.com/docs/api/people#metrics-timeline
-    client.get_profile_metrics_timeline(profile_id, since=None, count=100, sort='desc')
+    client.Profiles.get_profile_metrics_timeline(profile_id, since=None, count=100, sort='desc')
 
     # get all metrics for a profile with the default kwargs
     # to paginate the responses you will get a UUID returned from the response, see here for more information
     # https://www.klaviyo.com/docs/api/people#metrics-timeline
-    client.get_profile_metric_timeline(profile_id, metric_id, since=None, count=100, sort='desc')
+    client.Profiles.get_profile_metrics_timeline_by_id(profile_id, metric_id, since=None, count=100, sort='desc')
+
+## Rate Limiting
+  If a rate limit happens it will throw a klaviyo.exceptions.KlaviyoRateLimitException
+  This will contain a detail key with a string value mentioning the time to back off in seconds
 
 ## How to use it with a Django application?
 
