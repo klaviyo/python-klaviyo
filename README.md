@@ -20,7 +20,7 @@ or
 ## Response Object
 
 All of the methods will return a KlaviyoAPIResponse object containing two attributes status_code and data.  
-For example if you wanted to create a list you would do the following:
+For example, if you wanted to create a list you would do the following:
 
     response = client.Lists.create_list(list_name)
     response.data # returns information about the created list
