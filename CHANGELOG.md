@@ -10,4 +10,4 @@
 
 
 ### 2.4
-- As this changelog was craeted after 3.0, please refer to the README for version 2 https://github.com/klaviyo/python-klaviyo/tree/99be1d36941b2b48561575eda16e25224ce91367
+- As this changelog was created after 3.0, please refer to the README for version 2 https://github.com/klaviyo/python-klaviyo/tree/99be1d36941b2b48561575eda16e25224ce91367
