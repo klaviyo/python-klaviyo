@@ -1,7 +1,7 @@
 ## CHANGELOG
 
 ### 3.1
-- python 2 compatible
+- Python 2 compatible
 
 ### 3.0
 - Redesign of the modules pattern.  Instead of using client.method_name we now utilize client.BASE_API_ENDPOINT.method_name
