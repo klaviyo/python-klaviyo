@@ -158,9 +158,9 @@ You can fetch profile information given the profile ID
     # https://www.klaviyo.com/docs/api/people#metrics-timeline
     client.Profiles.get_profile_metrics_timeline(profile_id, since=None, count=100, sort='desc')
 
-    # get all metrics for a profile with the default kwargs
-    # to paginate the responses you will get a UUID returned from the response, see here for more information
-    # https://www.klaviyo.com/docs/api/people#metrics-timeline
+    # get all events of a metric for a profile
+    # to paginate the responses you will get a UUID returned from the response
+    # https://www.klaviyo.com/docs/api/people#metric-timeline
     client.Profiles.get_profile_metrics_timeline_by_id(profile_id, metric_id, since=None, count=100, sort='desc')
 
 ## Rate Limiting
