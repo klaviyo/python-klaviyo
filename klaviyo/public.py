@@ -98,7 +98,7 @@ class Public(KlaviyoAPI):
         properties[self.TRACK_ONCE_KEY] = True
 
         return self.track(event, email=email, id=id, properties=properties, customer_properties=customer_properties,
-            ip_address=ip_address, is_test=is_test)
+            timestamp=timestamp, ip_address=ip_address, is_test=is_test)
 
     def identify(self, email=None, id=None, properties={}, is_test=False):
         """Makes an identify call to Klaviyo API.
@@ -115,7 +115,7 @@ class Public(KlaviyoAPI):
             (str): 1 (pass) or 0 (fail)
         """
         if not email and not id:
-            raise KlaviyoException('You must identify a user by email or ID.')
+            raise KlaviyoException(self.ERROR_MESSAGE_ID_AND_EMAIL)
 
         if not isinstance(properties, dict):
             properties = {}
@@ -123,9 +123,10 @@ class Public(KlaviyoAPI):
         if email: properties['email'] = email
         if id: properties['id'] = id
 
-        query_string = self._build_query_string({
+        params = {
             self.TOKEN: self.public_token,
-            'properties': properties,
-        }, is_test)
+            'properties': properties
+        }
 
+        query_string = self._build_query_string(params, is_test)
         return self._public_request(self.IDENTIFY, query_string)
