@@ -38,8 +38,7 @@ class Public(KlaviyoAPI):
         Returns:
             (str): 1 (pass) or 0 (fail).
         """
-        if not email and not id:
-            raise KlaviyoException(self.ERROR_MESSAGE_ID_AND_EMAIL)
+        self.can_identify()
 
         if properties is None:
             properties = {}
@@ -114,8 +113,7 @@ class Public(KlaviyoAPI):
         Returns:
             (str): 1 (pass) or 0 (fail)
         """
-        if not email and not id:
-            raise KlaviyoException(self.ERROR_MESSAGE_ID_AND_EMAIL)
+        self.can_identify(email, id)
 
         if not isinstance(properties, dict):
             properties = {}
@@ -130,3 +128,9 @@ class Public(KlaviyoAPI):
 
         query_string = self._build_query_string(params, is_test)
         return self._public_request(self.IDENTIFY, query_string)
+
+    @staticmethod
+    def can_identify(email=None, id=None):
+        if not email and not id:
+            raise KlaviyoException(Public.ERROR_MESSAGE_ID_AND_EMAIL)
+
