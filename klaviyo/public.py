@@ -136,8 +136,8 @@ class Public(KlaviyoAPI):
         Args:
             email (str or None): Email address.
             external_id (str or None): External id for customer.
-        Returns:
-            (bool): Are we able to identify the profile.
+        Raises:
+            (KlaviyoException): Identifiers not provided.
         """
         if not email and not external_id:
             raise KlaviyoException(Public.ERROR_MESSAGE_ID_AND_EMAIL)
