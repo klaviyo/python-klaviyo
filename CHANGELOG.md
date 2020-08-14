@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 3.0.2
+- Small tweaks to public.py for consistency
+
 ### 3.0.1
 - Python 2 compatible
 
