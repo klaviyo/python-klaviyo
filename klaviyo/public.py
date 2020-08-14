@@ -14,7 +14,7 @@ class Public(KlaviyoAPI):
         self,
         event,
         email=None,
-        id=None,
+        external_id=None,
         properties=None,
         customer_properties=None,
         timestamp=None,
@@ -28,7 +28,7 @@ class Public(KlaviyoAPI):
         Args:
             event (str): Event name to be tracked.
             email (str or None): Email address.
-            id (str or None): External id for customer.
+            external_id (str or None): External id for customer.
             properties (dict): Information about the event.
             customer_properties (dict): Information about the customer.
             timestamp (unix timestamp): Time the request is happening.
@@ -38,8 +38,7 @@ class Public(KlaviyoAPI):
         Returns:
             (str): 1 (pass) or 0 (fail).
         """
-        if not email and not id:
-            raise KlaviyoException(self.ERROR_MESSAGE_ID_AND_EMAIL)
+        self._valid_identifiers(email, external_id)
 
         if properties is None:
             properties = {}
@@ -50,8 +49,8 @@ class Public(KlaviyoAPI):
         if email: 
             customer_properties['email'] = email
 
-        if id: 
-            customer_properties['id'] = id
+        if external_id: 
+            customer_properties['id'] = external_id
 
         params = {
             self.TOKEN: self.public_token,
@@ -71,7 +70,7 @@ class Public(KlaviyoAPI):
         self, 
         event, 
         email=None, 
-        id=None, 
+        external_id=None, 
         properties=None, 
         customer_properties=None,
         timestamp=None, 
@@ -82,7 +81,7 @@ class Public(KlaviyoAPI):
         Args:
             event (str): Event name to be tracked.
             email (str or None): Email address.
-            id (str or None): External id for customer.
+            external_id (str or None): External id for customer.
             properties (dict): Information about the event.
             customer_properties (dict): Information about the customer.
             timestamp (unix timestamp): Time the request is happening.
@@ -97,10 +96,10 @@ class Public(KlaviyoAPI):
 
         properties[self.TRACK_ONCE_KEY] = True
 
-        return self.track(event, email=email, id=id, properties=properties, customer_properties=customer_properties,
-            ip_address=ip_address, is_test=is_test)
+        return self.track(event, email=email, external_id=external_id, properties=properties, customer_properties=customer_properties,
+            timestamp=timestamp, ip_address=ip_address, is_test=is_test)
 
-    def identify(self, email=None, id=None, properties={}, is_test=False):
+    def identify(self, email=None, external_id=None, properties={}, is_test=False):
         """Makes an identify call to Klaviyo API.
 
         This will create/update a user with its associated customer properties.
@@ -108,24 +107,38 @@ class Public(KlaviyoAPI):
 
         Args:
             email (str or None): Email address.
-            id (str or None): External id for customer.
+            external_id (str or None): External id for customer.
             properties (dict): Information about the customer.
             is_test (bool): Should this be a test request.
         Returns:
             (str): 1 (pass) or 0 (fail)
         """
-        if not email and not id:
-            raise KlaviyoException('You must identify a user by email or ID.')
+        self._valid_identifiers(email, external_id)
 
         if not isinstance(properties, dict):
             properties = {}
 
         if email: properties['email'] = email
-        if id: properties['id'] = id
+        if id: properties['id'] = external_id
 
-        query_string = self._build_query_string({
+        params = {
             self.TOKEN: self.public_token,
-            'properties': properties,
-        }, is_test)
+            'properties': properties
+        }
 
+        query_string = self._build_query_string(params, is_test)
         return self._public_request(self.IDENTIFY, query_string)
+
+    @staticmethod
+    def _valid_identifiers(email=None, external_id=None):
+        """Checks whether we can identify a profile using an email or external id.
+
+        Args:
+            email (str or None): Email address.
+            external_id (str or None): External id for customer.
+        Raises:
+            (KlaviyoException): Identifiers not provided.
+        """
+        if not email and not external_id:
+            raise KlaviyoException(Public.ERROR_MESSAGE_ID_AND_EMAIL)
+
