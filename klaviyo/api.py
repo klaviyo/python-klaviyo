@@ -1,5 +1,6 @@
 import sys
 
+from .data_privacy import DataPrivacy
 from .lists import Lists
 from .metrics import Metrics
 from .profiles import Profiles
