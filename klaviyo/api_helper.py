@@ -215,6 +215,8 @@ class KlaviyoAPI(object):
             'Content-Type': 'application/json',
             'User-Agent': 'Klaviyo-Python/{}'.format(__version__)
         }
+        print(url)
+        print(data)
         response = getattr(requests, method.lower())(
             url,
             headers=headers,
@@ -247,13 +249,14 @@ class KlaviyoAPI(object):
             raise KlaviyoRateLimitException(status_code, response)
         elif status_code in (500, 503, ):
             raise KlaviyoServerError(status_code, response)
-        elif status_code != 200:
+        elif status_code != 200 and status_code != 202:
+            print(response.__dict__)
             raise KlaviyoAPIException(status_code, response)
 
-        return self.__handle_200_response(response, status_code)
+        return self.__handle_20X_response(response, status_code)
 
-    def __handle_200_response(self, response, status_code):
-        """Determines how to handle a 200 http response.
+    def __handle_20X_response(self, response, status_code):
+        """Determines how to handle a 20X http response.
 
         Args:
             response (obj): Requests object.
