@@ -10,7 +10,7 @@ class Lists(KlaviyoAPI):
     LIST_NAME = 'list_name'
 
     def get_lists(self):
-        """Returns a list of Klaviyo lists
+        """Returns a list of Klaviyo lists.
 
         https://www.klaviyo.com/docs/api/v2/lists#get-lists
         """
@@ -22,9 +22,9 @@ class Lists(KlaviyoAPI):
         https://www.klaviyo.com/docs/api/v2/lists#post-lists
 
         Args:
-            list_name (str): A list name
+            list_name (str): A list name.
         Returns:
-            (dict) containing the list_id
+            (dict) containing the list_id.
         """
         data = {
             self.LIST_NAME: list_name
@@ -39,7 +39,7 @@ class Lists(KlaviyoAPI):
         Args:
             list_id (str): The the list id.
         Returns:
-            (dict): information about the list
+            (dict): information about the list.
         """
         return self._v2_request('{}/{}'.format(self.LIST, list_id), self.HTTP_GET)
     
@@ -53,7 +53,7 @@ class Lists(KlaviyoAPI):
             list_name (str): Name of the list.
 
         Returns:
-            empty str on success
+            empty str on success.
 
         Raises:
             (KlaviyoApiException): Raised if request fails
@@ -76,7 +76,7 @@ class Lists(KlaviyoAPI):
             Empty str if successful.
 
         Raises:
-            (KlaviyoApiException): Raised if request fails
+            (KlaviyoApiException): Raised if request fails.
         """
         return self._v2_request('{}/{}'.format(self.LIST, list_id), self.HTTP_DELETE)
 
@@ -94,7 +94,7 @@ class Lists(KlaviyoAPI):
                 }]
 
         Returns:
-            (list of dicts): List of subscribed members or empty if double opt in is on
+            (list of dicts): List of subscribed members or empty if double opt in is on.
         """
         params = {
             self.PROFILES: profiles
@@ -151,7 +151,7 @@ class Lists(KlaviyoAPI):
                 }]
 
         Returns:
-            (list) of dicts containing the emails and profile id that were successful
+            (list) of dicts containing the emails and profile id that were successful.
         """
         params = {
             self.PROFILES: profiles
@@ -168,7 +168,7 @@ class Lists(KlaviyoAPI):
             emails (list): A list of email addresses.
 
         Returns:
-            (list) of dicts corresponding to the email addresses on their list if they're on the list
+            (list) of dicts corresponding to the email addresses on their list if they're on the list.
         """
         params = {
             self.EMAILS: emails
@@ -220,7 +220,7 @@ class Lists(KlaviyoAPI):
             marker (int): Pagination mechanism offset.
 
         Returns:
-            (list) of records containing profile IDs and emails and potentially a marker
+            (list) of records containing profile IDs and emails and potentially a marker.
         """
         params = self._build_marker_param(marker)
 

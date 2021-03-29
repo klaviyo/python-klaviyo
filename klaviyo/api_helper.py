@@ -94,7 +94,7 @@ class KlaviyoAPI(object):
 
     @staticmethod
     def _filter_params(params):
-        """Normalize all params and remove ones that don't exist
+        """Normalize all params and remove ones that don't exist.
 
         Args:
             params (dict): API Query params.
@@ -108,7 +108,7 @@ class KlaviyoAPI(object):
         """Creates a dictionary with the offset.
 
         Args:
-            marker (int): Offset for the next request
+            marker (int): Offset for the next request.
 
         Returns:
             (dict): Information containing the offset.
@@ -190,10 +190,10 @@ class KlaviyoAPI(object):
         """Track and identify calls, always a get request.
 
         Args:
-            path (str): track or identify
-            querystring (str): urlencoded & b64 encoded string
+            path (str): track or identify.
+            querystring (str): urlencoded & b64 encoded string.
         Returns:
-            (str): 1 or 0 (pass/fail)
+            (str): 1 or 0 (pass/fail).
         """
 
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
@@ -207,7 +207,7 @@ class KlaviyoAPI(object):
             url (str): URL to make the request to.
             params (dict or json): Body of the request.
         Returns:
-            (str, dict): Public returns 1 or 0  (pass/fail)
+            (str, dict): Public returns 1 or 0  (pass/fail).
                         v1/v2 returns (dict, list).
         """
         self._is_valid_request_option(request_type=request_type)

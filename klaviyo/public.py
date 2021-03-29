@@ -111,7 +111,7 @@ class Public(KlaviyoAPI):
             properties (dict): Information about the customer.
             is_test (bool): Should this be a test request.
         Returns:
-            (str): 1 (pass) or 0 (fail)
+            (str): 1 (pass) or 0 (fail).
         """
         self._valid_identifiers(email, external_id)
 
