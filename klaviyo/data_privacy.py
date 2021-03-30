@@ -1,14 +1,17 @@
 from .api_helper import KlaviyoAPI
 from .exceptions import KlaviyoException
 
+from enum import Enum
+
+class AllowedIdTypes(Enum):
+    EMAIL = 'email'
+    PHONE_NUMBER = 'phone_number'
+    PERSON_ID = 'person_id'
+
+
 class DataPrivacy(KlaviyoAPI):
     DATA_PRIVACY = 'data-privacy'
     DELETION_REQUEST = 'deletion-request'
-    ALLOWED_ID_TYPES = [
-        'email',
-        'phone_number',
-        'person_id',
-    ]
 
     def request_profile_deletion(self, identifier, id_type='email'):
         """Request a data privacy-compliant deletion for the person record corresponding to an email address,
@@ -25,8 +28,8 @@ class DataPrivacy(KlaviyoAPI):
         Raises:
             (KlaviyoAPIException): Raised if invalid id_type is provided.
         """
-        if id_type not in self.ALLOWED_ID_TYPES:
-            raise KlaviyoException('Invalid id_type provided. Valid types are: {}'.format(self.ALLOWED_ID_TYPES))
+        if id_type not in AllowedIdTypes:
+            raise KlaviyoException('Invalid id_type provided, must be one of: {}'.format([t.value for t in AllowedIdTypes]))
 
         data = {
             id_type: identifier,
