@@ -250,9 +250,9 @@ class KlaviyoAPI(object):
         elif status_code != 200 and status_code != 202:
             raise KlaviyoAPIException(status_code, response)
 
-        return self.__handle_20X_response(response, status_code)
+        return self._handle_successful_response(response, status_code)
 
-    def __handle_20X_response(self, response, status_code):
+    def _handle_successful_response(self, response, status_code):
         """Determines how to handle a 20X http response.
 
         Args:
