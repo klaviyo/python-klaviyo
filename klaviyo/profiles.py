@@ -106,6 +106,6 @@ class Profiles(KlaviyoAPI):
                 (KlaviyoAPIResponse): Object with HTTP response code and data.
         """
         data = {
-            'email': email
+            'email': email,
         }
-        return self._v2_request('{}/{}'.format(self.PEOPLE, self.SEARCH), self.HTTP_GET, data)
+        return self._v2_request('{}/{}'.format(self.PEOPLE, self.SEARCH), self.HTTP_GET, data=data)

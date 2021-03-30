@@ -26,11 +26,11 @@ class DataPrivacy(KlaviyoAPI):
             (KlaviyoAPIException): Raised if invalid id_type is provided.
         """
         if id_type not in self.ALLOWED_ID_TYPES:
-            raise KlaviyoException('Invalid id_type provided.')
+            raise KlaviyoException('Invalid id_type provided. Valid types are: {}'.format(self.ALLOWED_ID_TYPES))
 
-        params = {
-            id_type: identifier
+        data = {
+            id_type: identifier,
         }
 
-        return self._v2_request('{}/{}'.format(self.DATA_PRIVACY, self.DELETION_REQUEST), self.HTTP_POST, params)
+        return self._v2_request('{}/{}'.format(self.DATA_PRIVACY, self.DELETION_REQUEST), self.HTTP_POST, data=data)
         
