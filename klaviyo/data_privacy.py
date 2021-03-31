@@ -28,7 +28,7 @@ class DataPrivacy(KlaviyoAPI):
         Raises:
             (KlaviyoAPIException): Raised if invalid id_type is provided.
         """
-        if id_type not in [t.value for t in AllowedIdTypes]:
+        if not AllowedIdTypes(id_type):
             raise KlaviyoException('Invalid id_type provided, must be one of: {}'.format([t.value for t in AllowedIdTypes]))
 
         data = {
