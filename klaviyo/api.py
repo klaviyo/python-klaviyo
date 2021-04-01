@@ -1,5 +1,6 @@
 import sys
 
+from .data_privacy import DataPrivacy
 from .lists import Lists
 from .metrics import Metrics
 from .profiles import Profiles
@@ -17,14 +18,14 @@ class Klaviyo(object):
 
 class KlaviyoAPIDynamicWrapper(object):
     def __init__(self, resource_class, api, *args, **kwargs):
-        """An API Wrapper to dynamically load the class and method"""
+        """An API Wrapper to dynamically load the class and method."""
         if isinstance(resource_class, str):
             self.resource_class = self.str_to_class(resource_class, api)
         else:
             self.resource_class = resource_class
 
     def __getattr__(self, item):
-        """Overwrite to make us dynamically call the called class and it's method automatically"""
+        """Overwrite to make us dynamically call the called class and its method automatically."""
         return lambda *args, **kwargs: getattr(self.resource_class, item)(*args, **kwargs)
 
     @classmethod
@@ -37,7 +38,7 @@ class KlaviyoAPIDynamicWrapper(object):
             api (obj): Klaviyo api object.
 
         Returns:
-            (obj): KlaviyoApi resource
+            (obj): KlaviyoApi resource.
         """
         return getattr(sys.modules[__name__], str)(public_token=api.public_token, private_token=api.private_token)
 

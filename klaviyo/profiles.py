@@ -3,6 +3,8 @@ from .api_helper import KlaviyoAPI
 
 class Profiles(KlaviyoAPI):
     PERSON = 'person'
+    PEOPLE = 'people'
+    SEARCH = 'search'
 
     def get_profile(self, profile_id):
         """Get a profile by its ID.
@@ -75,7 +77,7 @@ class Profiles(KlaviyoAPI):
             sort (str): The order in which results should be returned.
 
         Returns:
-            (dict): information about the specified metric id for the profile
+            (dict): information about the specified metric id for the profile.
         """
         params = {
             self.COUNT: count,
@@ -94,3 +96,16 @@ class Profiles(KlaviyoAPI):
             self.HTTP_GET,
             params=filtered_params
         )
+
+    def get_profile_id_by_email(self, email):
+        """Gets the profile ID tied to a given email (if one exists).
+
+            Args:
+                email (str): Email to get profile ID for.
+            Returns:
+                (KlaviyoAPIResponse): Object with HTTP response code and data.
+        """
+        data = {
+            'email': email,
+        }
+        return self._v2_request('{}/{}'.format(self.PEOPLE, self.SEARCH), self.HTTP_GET, data=data)

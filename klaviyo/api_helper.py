@@ -94,7 +94,7 @@ class KlaviyoAPI(object):
 
     @staticmethod
     def _filter_params(params):
-        """Normalize all params and remove ones that don't exist
+        """Normalize all params and remove ones that don't exist.
 
         Args:
             params (dict): API Query params.
@@ -108,7 +108,7 @@ class KlaviyoAPI(object):
         """Creates a dictionary with the offset.
 
         Args:
-            marker (int): Offset for the next request
+            marker (int): Offset for the next request.
 
         Returns:
             (dict): Information containing the offset.
@@ -190,10 +190,10 @@ class KlaviyoAPI(object):
         """Track and identify calls, always a get request.
 
         Args:
-            path (str): track or identify
-            querystring (str): urlencoded & b64 encoded string
+            path (str): track or identify.
+            querystring (str): urlencoded & b64 encoded string.
         Returns:
-            (str): 1 or 0 (pass/fail)
+            (str): 1 or 0 (pass/fail).
         """
 
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
@@ -207,7 +207,7 @@ class KlaviyoAPI(object):
             url (str): URL to make the request to.
             params (dict or json): Body of the request.
         Returns:
-            (str, dict): Public returns 1 or 0  (pass/fail)
+            (str, dict): Public returns 1 or 0  (pass/fail).
                         v1/v2 returns (dict, list).
         """
         self._is_valid_request_option(request_type=request_type)
@@ -247,13 +247,13 @@ class KlaviyoAPI(object):
             raise KlaviyoRateLimitException(status_code, response)
         elif status_code in (500, 503, ):
             raise KlaviyoServerError(status_code, response)
-        elif status_code != 200:
+        elif status_code != 200 and status_code != 202:
             raise KlaviyoAPIException(status_code, response)
 
-        return self.__handle_200_response(response, status_code)
+        return self._handle_successful_response(response, status_code)
 
-    def __handle_200_response(self, response, status_code):
-        """Determines how to handle a 200 http response.
+    def _handle_successful_response(self, response, status_code):
+        """Determines how to handle a 20X http response.
 
         Args:
             response (obj): Requests object.

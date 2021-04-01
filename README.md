@@ -145,7 +145,7 @@ You can create, update, read, and delete lists.  See here for more information h
     # get all members in a group or list
     client.Lists.get_all_members(group_id, marker=None)
     
-You can fetch profile information given the profile ID
+You can fetch profile information given the profile ID. See here for more information: https://www.klaviyo.com/docs/api/people
 
     # get profile by profile_id
     client.Profiles.get_profile(profile_id)
@@ -162,6 +162,16 @@ You can fetch profile information given the profile ID
     # to paginate the responses you will get a UUID returned from the response
     # https://www.klaviyo.com/docs/api/people#metric-timeline
     client.Profiles.get_profile_metrics_timeline_by_id(profile_id, metric_id, since=None, count=100, sort='desc')
+
+You can fetch the profile ID for a given email:
+
+    # get the profile_id for 'thomas.jefferson@mailinator.com'
+    client.Profiles.get_profile_id_by_email('thomas.jefferson@mailinator.com')
+
+You can request profile deletion based on an email, phone number, or profile ID. See here for more information: https://www.klaviyo.com/docs/api/v2/data-privacy
+
+    # request deletion of the profile tied to 'thomas.jefferson@mailinator.com'
+    client.DataPrivacy.request_profile_deletion(identifier='thomas.jefferson@mailinator.com, id_type='email')
 
 ## Rate Limiting
   If a rate limit happens it will throw a klaviyo.exceptions.KlaviyoRateLimitException

@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 3.1.0
+- Added support for the Data Privacy API
+- Added support for people/search endpoint
+
 ### 3.0.2
 - Small tweaks to public.py for consistency
 
