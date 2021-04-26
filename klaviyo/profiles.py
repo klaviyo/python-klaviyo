@@ -114,11 +114,15 @@ class Profiles(KlaviyoAPI):
         """Unset properties on a given profile.
 
             Args:
-                profile_id (str):
-                properties (list):
+                profile_id (str): Unique id for profile.
+                properties (list): The list of properties to unset.
             Returns:
                 (KlaviyoAPIResponse): Object with HTTP response code and data.
+            Raises:
+                (KlaviyoAPIException): Raised if properties are not a list.
         """
+        if(not isinstance(properties, list)):
+            raise KlaviyoException('Argument "properties" must be a list.')
         params = {
             '$unset': json.dumps(properties),
         }
