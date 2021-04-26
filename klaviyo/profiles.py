@@ -1,5 +1,6 @@
 import json
 from .api_helper import KlaviyoAPI
+from .exceptions import KlaviyoException
 
 class Profiles(KlaviyoAPI):
     PERSON = 'person'
