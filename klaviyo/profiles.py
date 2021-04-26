@@ -109,3 +109,17 @@ class Profiles(KlaviyoAPI):
             'email': email,
         }
         return self._v2_request('{}/{}'.format(self.PEOPLE, self.SEARCH), self.HTTP_GET, data=data)
+
+    def unset_profile_properties(self, profile_id, properties=[]):
+        """Unset properties on a given profile.
+
+            Args:
+                profile_id (str):
+                properties (list):
+            Returns:
+                (KlaviyoAPIResponse): Object with HTTP response code and data.
+        """
+        params = {
+            '$unset': json.dumps(properties),
+        }
+        return self._v1_request("{}/{}".format(self.PERSON, profile_id), self.HTTP_PUT, params=params)
