@@ -122,7 +122,7 @@ class Profiles(KlaviyoAPI):
             Raises:
                 (KlaviyoAPIException): Raised if properties are not a list.
         """
-        if(not isinstance(properties, list)):
+        if not isinstance(properties, list):
             raise KlaviyoException('Argument "properties" must be a list.')
         params = {
             '$unset': json.dumps(properties),
