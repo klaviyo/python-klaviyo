@@ -152,6 +152,12 @@ You can fetch profile information given the profile ID. See here for more inform
     
     # update a profile
     client.Profiles.update_profile(profile_id, properties) # properties is a dict
+
+    # unset properties on a profile
+    client.Profiles.unset_profile_properties(
+        profile_id,
+        properties=['snake_case_property', 'camelCaseProperty', 'This one has spaces']
+    )
     
     # get all metrics for a profile with the default kwargs
     # to paginate the responses you will get a UUID returned from the response, see here for more information
