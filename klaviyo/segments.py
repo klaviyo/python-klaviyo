@@ -7,7 +7,7 @@ class Segments(KlaviyoAPI):
     MEMBERS = 'members'
     ALL = 'all'
 
-    def get_profiles_from_lists(self, segment_id, emails):
+    def get_profiles_from_lists(self, segment_id: str, emails: str):
         """
         Checks if one or more emails are in a given segment.
         No distinction is made between a person not being in a given segment,

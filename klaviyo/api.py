@@ -6,6 +6,7 @@ from .metrics import Metrics
 from .profiles import Profiles
 from .public import Public
 from .segments import Segments
+from .campaigns import Campaigns
 
 
 class Klaviyo(object):
