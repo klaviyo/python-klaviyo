@@ -31,3 +31,6 @@ pip-log.txt
 .mr.developer.cfg
 
 .DS_Store
+
+# main file(for test purposes)
+main.py
