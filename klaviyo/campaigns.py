@@ -6,7 +6,7 @@ class Campaigns(KlaviyoAPI):
     CAMPAIGN = 'campaign'
     RECIPIENTS = 'recipients'
 
-    def get_campaigns(self, page: str = None, count: str = None):
+    def get_campaigns(self, page=None, count=None):
         """
         Returns a list of all the campaigns you've created.
         The campaigns are returned in reverse sorted order by
@@ -26,7 +26,7 @@ class Campaigns(KlaviyoAPI):
 
         return self._v1_request(self.CAMPAIGNS, self.HTTP_GET, params)
 
-    def get_campaign_recipients(self, campaign_id: str, count: str = None, sort: str = "asc"):
+    def get_campaign_recipients(self, campaign_id, count=None, sort="asc"):
         """
         Returns summary information about email recipients for the campaign
         specified that includes each recipients email, customer ID, and status.
