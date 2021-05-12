@@ -228,16 +228,18 @@ class Lists(KlaviyoAPI):
         return self._v2_request('group/{}/{}/{}'.format(group_id, self.MEMBERS, self.ALL), self.HTTP_GET, params)
 
     def get_members_from_segment(self, segment_id, emails):
-        """
-        Checks if one or more emails are in a given segment.
+        """Checks if one or more emails are in a given segment.
         No distinction is made between a person not being in a given segment,
         and not being present in Klaviyo at all.
         Can check up to a maximum of 100 emails at a time.
 
         https://apidocs.klaviyo.com/reference/lists-segments#get-segment-members
 
-        segment_id (str): The segment id.
-        emails (list):  A list of email addresses.
+        Args:
+            segment_id (str): The segment id.
+            emails (list):  A list of email addresses.
+        Returns:
+            (list) of dicts corresponding to the email addresses on their segments if they're on the segment.
 
         """
 
