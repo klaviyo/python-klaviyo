@@ -7,7 +7,7 @@ class Segments(KlaviyoAPI):
     MEMBERS = 'members'
     ALL = 'all'
 
-    def get_profiles_from_lists(self, segment_id: str, emails: str):
+    def get_members_from_lists(self, segment_id: str, emails: str):
         """
         Checks if one or more emails are in a given segment.
         No distinction is made between a person not being in a given segment,
@@ -16,9 +16,9 @@ class Segments(KlaviyoAPI):
 
         https://apidocs.klaviyo.com/reference/lists-segments#get-segment-members
 
-        :param segment_id:
-        :param emails:
-        :return:
+        segment_id (str):
+        emails (str):
+
         """
 
         params = {
@@ -27,18 +27,16 @@ class Segments(KlaviyoAPI):
 
         return self._v1_request('{}/{}/{}'.format(self.SEGMENT, segment_id, self.MEMBERS), self.HTTP_GET, params)
 
-    def get_all_profiles(self, segment_id: str, marker: int = None):
+    def get_all_members(self, segment_id: str, marker: int = None):
         """
         Get all of the emails in a given segment.
 
         https://apidocs.klaviyo.com/reference/lists-segments#get-members
 
         Args:
-            segment_id (str): The list id or the segment id.
+            segment_id (str): The segment id.
             marker (int): Pagination mechanism offset.
 
-        Returns:
-            (list) of records containing profile IDs and emails and potentially a marker.
         """
 
         params = self._build_marker_param(marker)
