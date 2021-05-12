@@ -28,7 +28,7 @@ class Campaigns(KlaviyoAPI):
 
         return self._v1_request(self.CAMPAIGNS, self.HTTP_GET, params)
 
-    def get_campaign_recipients(self, campaign_id, count=25000, sort="asc"):
+    def get_campaign_recipients(self, campaign_id, count=5000, sort="asc"):
         """Returns summary information about email recipients for the campaign
         specified that includes each recipients email, customer ID, and status.
 
