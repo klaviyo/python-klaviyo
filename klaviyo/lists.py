@@ -244,7 +244,7 @@ class Lists(KlaviyoAPI):
         """
 
         params = {
-            self.EMAIL: emails
+            self.EMAIL: ",".join(emails)
         }
 
         return self._v1_request('{}/{}/{}'.format(self.SEGMENT, segment_id, self.MEMBERS), self.HTTP_GET, params)
