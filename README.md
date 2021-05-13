@@ -144,6 +144,9 @@ You can create, update, read, and delete lists.  See here for more information h
     
     # get all members in a group or list
     client.Lists.get_all_members(group_id, marker=None)
+
+    # check if email is in a segment, takes a list of emails.
+    client.Lists.get_members_from_segment(segment_id, [emails])
     
 You can fetch profile information given the profile ID. See here for more information: https://www.klaviyo.com/docs/api/people
 
@@ -178,6 +181,14 @@ You can request profile deletion based on an email, phone number, or profile ID.
 
     # request deletion of the profile tied to 'thomas.jefferson@mailinator.com'
     client.DataPrivacy.request_profile_deletion(identifier='thomas.jefferson@mailinator.com, id_type='email')
+
+You can fetch information from campaigns:
+
+    # request all campaigns
+    client.Campaigns.get_campaigns(page=0, count=50)
+    
+    # get campaign recipients (offset can be found from the next_offset in the previous response)
+    client.Campaigns.get_campaign_recipients(campaign_id, count=5000, offset='', sort='asc')
 
 ## Rate Limiting
   If a rate limit happens it will throw a klaviyo.exceptions.KlaviyoRateLimitException
