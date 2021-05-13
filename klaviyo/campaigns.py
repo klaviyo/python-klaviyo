@@ -49,7 +49,7 @@ class Campaigns(KlaviyoAPI):
 
         params = {
             self.COUNT: count,
-            self.SORT: sort
+            self.SORT: sort,
             self.OFFSET: offset
         }
 
