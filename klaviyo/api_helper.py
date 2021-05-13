@@ -59,6 +59,7 @@ class KlaviyoAPI(object):
     SORT = 'sort'
     PROFILES = 'profiles'
     EMAILS = 'emails'
+    EMAIL = 'email'
     SINCE = 'since'
     MARKER = 'marker'
 

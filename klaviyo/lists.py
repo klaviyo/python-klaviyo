@@ -4,6 +4,7 @@ from .api_helper import KlaviyoAPI
 class Lists(KlaviyoAPI):
     LIST = 'list'
     LISTS = 'lists'
+    SEGMENT = 'segment'
     SUBSCRIBE = 'subscribe'
     MEMBERS = 'members'
     ALL = 'all'
@@ -225,3 +226,25 @@ class Lists(KlaviyoAPI):
         params = self._build_marker_param(marker)
 
         return self._v2_request('group/{}/{}/{}'.format(group_id, self.MEMBERS, self.ALL), self.HTTP_GET, params)
+
+    def get_members_from_segment(self, segment_id, emails):
+        """Checks if one or more emails are in a given segment.
+        No distinction is made between a person not being in a given segment,
+        and not being present in Klaviyo at all.
+        Can check up to a maximum of 100 emails at a time.
+
+        https://apidocs.klaviyo.com/reference/lists-segments#get-segment-members
+
+        Args:
+            segment_id (str): The segment id.
+            emails (list):  A list of email addresses.
+        Returns:
+            (list) of dicts corresponding to the email addresses on their segments if they're on the segment.
+
+        """
+
+        params = {
+            self.EMAIL: ",".join(emails)
+        }
+
+        return self._v1_request('{}/{}/{}'.format(self.SEGMENT, segment_id, self.MEMBERS), self.HTTP_GET, params)

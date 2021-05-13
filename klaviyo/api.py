@@ -5,6 +5,7 @@ from .lists import Lists
 from .metrics import Metrics
 from .profiles import Profiles
 from .public import Public
+from .campaigns import Campaigns
 
 
 class Klaviyo(object):
