@@ -13,13 +13,5 @@ class PublicFixture(KlaviyoAPIFixture):
         return 'thomas.jefferson@mailinator.com'
 
     @pytest.fixture
-    def mock_valid_id_type(self):
-        return 'email'
-
-    @pytest.fixture
-    def mock_invalid_id_type(self):
-        return 'pizza'
-
-    @pytest.fixture
     def mock_external_id(self):
         return 123
