@@ -1,5 +1,8 @@
 ## CHANGELOG
 
+### 3.1.3
+- Fix identify ID call.
+
 ### 3.1.2
 - Added support for Campaigns API
 

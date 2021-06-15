@@ -118,8 +118,11 @@ class Public(KlaviyoAPI):
         if not isinstance(properties, dict):
             properties = {}
 
-        if email: properties['email'] = email
-        if id: properties['id'] = external_id
+        if email:
+            properties['email'] = email
+
+        if external_id:
+            properties['id'] = external_id
 
         params = {
             self.TOKEN: self.public_token,
