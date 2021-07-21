@@ -4,9 +4,9 @@ from .exceptions import KlaviyoException
 from json import dumps
 from requests import request
 try:
-   from urllib.parse import urlencode
+   from urllib.parse import urlencode, quote, quote_plus
 except ImportError:
-   from urllib import urlencode
+   from urllib import urlencode, quote, quote_plus
 
 class Public(KlaviyoAPI):
     # PUBLIC API PATHS
@@ -88,7 +88,7 @@ class Public(KlaviyoAPI):
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
 
-                response = request("POST", url, data=urlencode({'data':params}), headers=headers)
+                response = request("POST", url, data='data='+quote_plus(dumps(params)).replace('+','%20'), headers=headers)
 
                 return KlaviyoAPIResponse(response.status_code, response.json())
 
@@ -163,10 +163,29 @@ class Public(KlaviyoAPI):
         }
 
 
-        # INSERT LOGIC FROM TRACK TO HERE
+        if method not in ['get','post']:
 
-        query_string = self._build_query_string(params, is_test)
-        return self._public_request(self.TRACK, query_string)
+            raise ValueError('method argument must be either "post" or "get"')
+
+        else:
+
+            if method == 'post':
+
+                url = f'{KlaviyoAPI.KLAVIYO_API_SERVER}/{self.IDENTIFY}'
+
+                headers = {
+                    "Accept": "text/html",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+
+                response = request("POST", url, data='data='+quote_plus(dumps(params)).replace('+','%20'), headers=headers)
+
+                return KlaviyoAPIResponse(response.status_code, response.json())
+
+            else: # original 'get' case
+
+                query_string = self._build_query_string(params, is_test)
+                return self._public_request(self.TRACK, query_string)
 
     @staticmethod
     def _valid_identifiers(email=None, external_id=None):
