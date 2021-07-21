@@ -3,7 +3,10 @@ from .exceptions import KlaviyoException
 
 from json import dumps
 from requests import request
-from urllib.parse import urlencode
+try:
+   from urllib.parse import urlencode
+except ImportError:
+   from urllib import urlencode
 
 class Public(KlaviyoAPI):
     # PUBLIC API PATHS
@@ -85,7 +88,7 @@ class Public(KlaviyoAPI):
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
 
-                response = request("POST", url, data={'data':urlencode(params)}, headers=headers)
+                response = request("POST", url, data=urlencode({'data':params}), headers=headers)
 
                 return KlaviyoAPIResponse(response.status_code, response.json())
 
@@ -162,8 +165,8 @@ class Public(KlaviyoAPI):
 
         # INSERT LOGIC FROM TRACK TO HERE
 
-            query_string = self._build_query_string(params, is_test)
-            return self._public_request(self.TRACK, query_string)
+        query_string = self._build_query_string(params, is_test)
+        return self._public_request(self.TRACK, query_string)
 
     @staticmethod
     def _valid_identifiers(email=None, external_id=None):
