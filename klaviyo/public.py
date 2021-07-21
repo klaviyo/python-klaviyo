@@ -185,7 +185,7 @@ class Public(KlaviyoAPI):
             else: # original 'get' case
 
                 query_string = self._build_query_string(params, is_test)
-                return self._public_request(self.TRACK, query_string)
+                return self._public_request(self.IDENTIFY, query_string)
 
     @staticmethod
     def _valid_identifiers(email=None, external_id=None):
