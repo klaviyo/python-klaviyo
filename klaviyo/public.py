@@ -80,7 +80,7 @@ class Public(KlaviyoAPI):
 
             if method == 'post':
 
-                url = f'{KlaviyoAPI.KLAVIYO_API_SERVER}/{self.TRACK}'
+                url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.TRACK)
 
                 headers = {
                     "Accept": "text/html",
@@ -172,7 +172,7 @@ class Public(KlaviyoAPI):
 
             if method == 'post':
 
-                url = f'{KlaviyoAPI.KLAVIYO_API_SERVER}/{self.IDENTIFY}'
+                url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.IDENTIFY)
 
                 headers = {
                     "Accept": "text/html",
