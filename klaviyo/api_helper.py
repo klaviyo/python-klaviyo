@@ -214,7 +214,7 @@ class KlaviyoAPI(object):
             (str): 1 or 0 (pass/fail).
         """
 
-        response = request("POST", url, data=querystring, headers=headers)
+        response = requests.request("POST", url, data=datastring, headers=headers)
 
         return KlaviyoAPIResponse(response.status_code, response.json())
 
