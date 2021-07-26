@@ -26,7 +26,7 @@ class Public(KlaviyoAPI):
         timestamp=None,
         ip_address=None,
         is_test=False,
-        method='get'
+        method=KlaviyoAPI.HTTP_GET
         ):
         """Will create an event (metric) in Klaviyo.
 
@@ -76,27 +76,23 @@ class Public(KlaviyoAPI):
 
             raise ValueError('method argument must be either "post" or "get"')
 
-        else:
+        if method == 'post':
 
-            if method == 'post':
+            url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.TRACK)
 
-                url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.TRACK)
+            headers = {
+                "Accept": "text/html",
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
 
-                headers = {
-                    "Accept": "text/html",
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
+            datastring = self._build_query_string_post(params)
 
-                transformed = 'data='+quote(dumps(params))
+            return _public_post_request(url, datastring, headers)
 
-                response = request("POST", url, data=transformed, headers=headers)
+        else: # original 'get' case
 
-                return KlaviyoAPIResponse(response.status_code, response.json())
-
-            else: # original 'get' case
-
-                query_string = self._build_query_string(params, is_test)
-                return self._public_request(self.TRACK, query_string)
+            query_string = self._build_query_string(params, is_test)
+            return self._public_request(self.TRACK, query_string)
 
     def track_once(
         self, 
@@ -131,7 +127,7 @@ class Public(KlaviyoAPI):
         return self.track(event, email=email, external_id=external_id, properties=properties, customer_properties=customer_properties,
             timestamp=timestamp, ip_address=ip_address, is_test=is_test)
 
-    def identify(self, email=None, external_id=None, properties={}, is_test=False, method='get'):
+    def identify(self, email=None, external_id=None, properties={}, is_test=False, method=KlaviyoAPI.HTTP_GET):
         """Makes an identify call to Klaviyo API.
 
         This will create/update a user with its associated customer properties.
@@ -164,31 +160,27 @@ class Public(KlaviyoAPI):
         }
 
 
-        if method not in ['get','post']:
+        if method.lower() not in ['get','post']:
 
             raise ValueError('method argument must be either "post" or "get"')
 
-        else:
+        if method == 'post':
 
-            if method == 'post':
+            url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.IDENTIFY)
 
-                url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.IDENTIFY)
+            headers = {
+                "Accept": "text/html",
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
 
-                headers = {
-                    "Accept": "text/html",
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
+            datastring = self._build_query_string_post(params)
 
-                transformed = 'data='+quote(dumps(params))
+            return _public_post_request(url, datastring, headers)
 
-                response = request("POST", url, data=transformed, headers=headers)
+        else: # original 'get' case
 
-                return KlaviyoAPIResponse(response.status_code, response.json())
-
-            else: # original 'get' case
-
-                query_string = self._build_query_string(params, is_test)
-                return self._public_request(self.IDENTIFY, query_string)
+            query_string = self._build_query_string(params, is_test)
+            return self._public_request(self.IDENTIFY, query_string)
 
     @staticmethod
     def _valid_identifiers(email=None, external_id=None):
@@ -202,3 +194,4 @@ class Public(KlaviyoAPI):
         """
         if not email and not external_id:
             raise KlaviyoException(Public.ERROR_MESSAGE_ID_AND_EMAIL)
+
