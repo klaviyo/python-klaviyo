@@ -125,7 +125,7 @@ class KlaviyoAPI(object):
             'test': 1 if is_test else 0,
         })
 
-    def _build_query_string_post(self, params):
+    def _build_data_string(self, params):
 
         return '{}={}'.format(self.KLAVIYO_DATA_VARIABLE, quote(json.dumps(params)))
 

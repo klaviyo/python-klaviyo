@@ -85,7 +85,7 @@ class Public(KlaviyoAPI):
                 "Content-Type": "application/x-www-form-urlencoded"
             }
 
-            datastring = self._build_query_string_post(params)
+            datastring = self._build_data_string(params)
 
             return self._public_post_request(url, datastring, headers)
 
@@ -173,7 +173,7 @@ class Public(KlaviyoAPI):
                 "Content-Type": "application/x-www-form-urlencoded"
             }
 
-            datastring = self._build_query_string_post(params)
+            datastring = self._build_data_string(params)
 
             return self._public_post_request(url, datastring, headers)
 
