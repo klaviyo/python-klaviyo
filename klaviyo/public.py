@@ -1,12 +1,11 @@
 from .api_helper import KlaviyoAPI, KlaviyoAPIResponse
 from .exceptions import KlaviyoException
-
 from json import dumps
 from requests import request
 try:
-   from urllib.parse import urlencode, quote, quote_plus
+   from urllib.parse import quote
 except ImportError:
-   from urllib import urlencode, quote, quote_plus
+   from urllib import quote
 
 class Public(KlaviyoAPI):
     # PUBLIC API PATHS
@@ -88,7 +87,9 @@ class Public(KlaviyoAPI):
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
 
-                response = request("POST", url, data='data='+quote_plus(dumps(params)).replace('+','%20'), headers=headers)
+                transformed = 'data='+quote(dumps(params))
+
+                response = request("POST", url, data=transformed, headers=headers)
 
                 return KlaviyoAPIResponse(response.status_code, response.json())
 
@@ -178,7 +179,9 @@ class Public(KlaviyoAPI):
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
 
-                response = request("POST", url, data='data='+quote_plus(dumps(params)).replace('+','%20'), headers=headers)
+                transformed = 'data='+quote(dumps(params))
+
+                response = request("POST", url, data=transformed, headers=headers)
 
                 return KlaviyoAPIResponse(response.status_code, response.json())
 
