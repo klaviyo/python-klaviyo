@@ -58,7 +58,7 @@ You can then easily use Klaviyo to track events or identify people.  Note, track
     )
 
     # ...or just add a property to someone
-    client.Public.identify(email='thomas.jefferson@mailinator.com', method='post', properties={
+    client.Public.identify(email='thomas.jefferson@mailinator.com', properties={
         '$first_name': 'Thomas',
         '$last_name': 'Jefferson',
         'Plan' : 'Premium',
