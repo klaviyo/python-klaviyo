@@ -72,7 +72,7 @@ class Public(KlaviyoAPI):
         if ip_address:
             params['ip'] = ip_address
 
-        if method not in ['get','post']:
+        if method.lower() not in ['get','post']:
 
             raise ValueError('method argument must be either "post" or "get"')
 
@@ -202,4 +202,3 @@ class Public(KlaviyoAPI):
         """
         if not email and not external_id:
             raise KlaviyoException(Public.ERROR_MESSAGE_ID_AND_EMAIL)
-
