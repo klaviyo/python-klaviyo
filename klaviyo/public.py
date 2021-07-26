@@ -87,7 +87,7 @@ class Public(KlaviyoAPI):
 
             datastring = self._build_query_string_post(params)
 
-            return _public_post_request(url, datastring, headers)
+            return self._public_post_request(url, datastring, headers)
 
         else: # original 'get' case
 
@@ -175,7 +175,7 @@ class Public(KlaviyoAPI):
 
             datastring = self._build_query_string_post(params)
 
-            return _public_post_request(url, datastring, headers)
+            return self._public_post_request(url, datastring, headers)
 
         else: # original 'get' case
 
