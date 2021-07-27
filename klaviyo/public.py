@@ -73,7 +73,7 @@ class Public(KlaviyoAPI):
 
         if method.lower() not in [KlaviyoAPI.HTTP_POST, KlaviyoAPI.HTTP_GET]:
 
-            raise ValueError('method argument must be either "post" or "get"')
+            raise KlaviyoException('method argument must be either "post" or "get"')
 
         if method == KlaviyoAPI.HTTP_POST:
 
