@@ -76,9 +76,9 @@ class Public(KlaviyoAPI):
 
             raise ValueError('method argument must be either "post" or "get"')
 
-        if method == 'post':
+        if method == KlaviyoAPI.HTTP_POST:
 
-            url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.TRACK)
+            url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER,self.TRACK)
 
             headers = {
                 "Accept": "text/html",
@@ -164,9 +164,9 @@ class Public(KlaviyoAPI):
 
             raise ValueError('method argument must be either "post" or "get"')
 
-        if method == 'post':
+        if method == KlaviyoAPI.HTTP_POST:
 
-            url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.IDENTIFY)
+            url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER,self.IDENTIFY)
 
             headers = {
                 "Accept": "text/html",
