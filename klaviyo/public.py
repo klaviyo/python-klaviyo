@@ -72,7 +72,7 @@ class Public(KlaviyoAPI):
         if ip_address:
             params['ip'] = ip_address
 
-        if method.lower() not in ['get','post']:
+        if method.lower() not in [KlaviyoAPI.HTTP_POST,KlaviyoAPI.HTTP_GET]:
 
             raise ValueError('method argument must be either "post" or "get"')
 
@@ -160,7 +160,7 @@ class Public(KlaviyoAPI):
         }
 
 
-        if method.lower() not in ['get','post']:
+        if method.lower() not in [KlaviyoAPI.HTTP_POST,KlaviyoAPI.HTTP_GET]:
 
             raise ValueError('method argument must be either "post" or "get"')
 
