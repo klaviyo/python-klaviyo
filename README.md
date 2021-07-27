@@ -35,13 +35,12 @@ After installing the klaviyo package you can initiate it using your public token
 
     client = klaviyo.Klaviyo(public_token=PUBLIC_TOKEN, private_token=PRIVATE_TOKEN)
 
-You can then easily use Klaviyo to track events or identify people.  Note, track and identify requests take your public token. For both track and identify, you can optionally supply which method to use to send the data, POST or GET (defaults to GET). They are functionally equivalent; we recommend POST, as it can handle larger payloads, but we support GET for backwards compatibility, particularly for customers with unique needs due to firewall settings on their end.
+You can then easily use Klaviyo to track events or identify people.  Note, track and identify requests take your public token.
 
     # Track an event...
     client.Public.track('Filled out profile', email='someone@mailinator.com', properties={
         'Added social accounts' : False,
-    },
-    method='post')
+    })
     
     # you can also add profile properties
     client.Public.track(
@@ -53,8 +52,7 @@ You can then easily use Klaviyo to track events or identify people.  Note, track
       customer_properties={
         '$first_name': 'Thomas',
         '$last_name': 'Jefferson'
-      },
-      method='post'
+      }
     )
 
     # ...or just add a property to someone
@@ -62,8 +60,7 @@ You can then easily use Klaviyo to track events or identify people.  Note, track
         '$first_name': 'Thomas',
         '$last_name': 'Jefferson',
         'Plan' : 'Premium',
-    },
-    method='post')
+    })
 
 You can get metrics, a timeline of events and export analytics for a metric.  See here for more https://www.klaviyo.com/docs/api/metrics
 

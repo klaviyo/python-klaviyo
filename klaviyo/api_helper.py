@@ -8,9 +8,9 @@ import requests
 import simplejson
 
 try:
-   from urllib.parse import urlencode, quote
+   from urllib.parse import urlencode
 except ImportError:
-   from urllib import urlencode, quote
+   from urllib import urlencode
 
 from .exceptions import (
     KlaviyoAPIException,
@@ -125,10 +125,6 @@ class KlaviyoAPI(object):
             'test': 1 if is_test else 0,
         })
 
-    def _build_data_string(self, params):
-
-        return '{}={}'.format(self.KLAVIYO_DATA_VARIABLE, quote(json.dumps(params)))
-
     #####################
     # API HELPER FUNCTIONS
     #####################
@@ -203,20 +199,6 @@ class KlaviyoAPI(object):
 
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
         return self._request(self.HTTP_GET, url, request_type=self.PUBLIC)
-
-    def _public_post_request(self, url, datastring, headers):
-        """Track and identify calls, always a get request.
-
-        Args:
-            path (str): track or identify.
-            querystring (str): urlencoded & b64 encoded string.
-        Returns:
-            (str): 1 or 0 (pass/fail).
-        """
-
-        response = requests.request("POST", url, data=datastring, headers=headers)
-
-        return KlaviyoAPIResponse(response.status_code, response.json())
 
     def _request(self, method, url, params=None, data=None, request_type=PRIVATE):
         """Executes the request being made.
