@@ -231,7 +231,7 @@ class KlaviyoAPI(object):
 
         return KlaviyoAPIResponse(response.status_code, response.json())
 
-    def _request(self, method, url, params=None, data=None, request_type=PRIVATE):
+    def _request(self, method, url, params=None, data=None, request_type=PRIVATE, headers=None):
         """Executes the request being made.
 
         Args:
@@ -243,10 +243,13 @@ class KlaviyoAPI(object):
                         v1/v2 returns (dict, list).
         """
         self._is_valid_request_option(request_type=request_type)
-        headers = {
-            'Content-Type': 'application/json',
-            'User-Agent': 'Klaviyo-Python/{}'.format(__version__)
-        }
+
+        if headers is None:
+            headers = {
+                'Content-Type': 'application/json',
+                'User-Agent': 'Klaviyo-Python/{}'.format(__version__)
+            }
+
         response = getattr(requests, method.lower())(
             url,
             headers=headers,
