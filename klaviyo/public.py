@@ -1,5 +1,11 @@
-from .api_helper import KlaviyoAPI
+from .api_helper import KlaviyoAPI, KlaviyoAPIResponse
 from .exceptions import KlaviyoException
+from json import dumps
+from requests import request
+try:
+   from urllib.parse import quote
+except ImportError:
+   from urllib import quote
 
 class Public(KlaviyoAPI):
     # PUBLIC API PATHS
@@ -19,7 +25,8 @@ class Public(KlaviyoAPI):
         customer_properties=None,
         timestamp=None,
         ip_address=None,
-        is_test=False
+        is_test=False,
+        method=KlaviyoAPI.HTTP_GET
         ):
         """Will create an event (metric) in Klaviyo.
 
@@ -34,10 +41,12 @@ class Public(KlaviyoAPI):
             timestamp (unix timestamp): Time the request is happening.
             ip_address (str): Ip address of the customer.
             is_test (bool): Should this be a test request.
+            method (str): 'post' or 'get'. Defaults to 'get'. We recommend 'post', but support 'get' for backwards compatibility.
 
         Returns:
             (str): 1 (pass) or 0 (fail).
         """
+
         self._valid_identifiers(email, external_id)
 
         if properties is None:
@@ -63,8 +72,27 @@ class Public(KlaviyoAPI):
         if ip_address:
             params['ip'] = ip_address
 
-        query_string = self._build_query_string(params, is_test)
-        return self._public_request(self.TRACK, query_string)
+        if method.lower() not in ['get','post']:
+
+            raise ValueError('method argument must be either "post" or "get"')
+
+        if method == 'post':
+
+            url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.TRACK)
+
+            headers = {
+                "Accept": "text/html",
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+
+            datastring = self._build_data_string(params)
+
+            return self._public_post_request(url, datastring, headers)
+
+        else: # original 'get' case
+
+            query_string = self._build_query_string(params, is_test)
+            return self._public_request(self.TRACK, query_string)
 
     def track_once(
         self, 
@@ -99,7 +127,7 @@ class Public(KlaviyoAPI):
         return self.track(event, email=email, external_id=external_id, properties=properties, customer_properties=customer_properties,
             timestamp=timestamp, ip_address=ip_address, is_test=is_test)
 
-    def identify(self, email=None, external_id=None, properties={}, is_test=False):
+    def identify(self, email=None, external_id=None, properties={}, is_test=False, method=KlaviyoAPI.HTTP_GET):
         """Makes an identify call to Klaviyo API.
 
         This will create/update a user with its associated customer properties.
@@ -110,6 +138,8 @@ class Public(KlaviyoAPI):
             external_id (str or None): External id for customer.
             properties (dict): Information about the customer.
             is_test (bool): Should this be a test request.
+            method (str): 'post' or 'get'. Defaults to 'get'. We recommend 'post', but support 'get' for backwards compatibility.
+
         Returns:
             (str): 1 (pass) or 0 (fail).
         """
@@ -129,8 +159,28 @@ class Public(KlaviyoAPI):
             'properties': properties
         }
 
-        query_string = self._build_query_string(params, is_test)
-        return self._public_request(self.IDENTIFY, query_string)
+
+        if method.lower() not in ['get','post']:
+
+            raise ValueError('method argument must be either "post" or "get"')
+
+        if method == 'post':
+
+            url = '{}/{}'.format(KlaviyoAPI.KLAVIYO_API_SERVER,self.IDENTIFY)
+
+            headers = {
+                "Accept": "text/html",
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+
+            datastring = self._build_data_string(params)
+
+            return self._public_post_request(url, datastring, headers)
+
+        else: # original 'get' case
+
+            query_string = self._build_query_string(params, is_test)
+            return self._public_request(self.IDENTIFY, query_string)
 
     @staticmethod
     def _valid_identifiers(email=None, external_id=None):
