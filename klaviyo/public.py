@@ -158,7 +158,6 @@ class Public(KlaviyoAPI):
             'properties': properties
         }
 
-
         if method.lower() not in [KlaviyoAPI.HTTP_POST,KlaviyoAPI.HTTP_GET]:
 
             raise ValueError('method argument must be either "post" or "get"')
