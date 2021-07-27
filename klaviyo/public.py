@@ -1,4 +1,4 @@
-from .api_helper import KlaviyoAPI, KlaviyoAPIResponse
+from .api_helper import KlaviyoAPI
 from .exceptions import KlaviyoException
 from json import dumps
 from requests import request
