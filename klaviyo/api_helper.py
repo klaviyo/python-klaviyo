@@ -126,6 +126,14 @@ class KlaviyoAPI(object):
         })
 
     def _build_data_string(self, params):
+        '''Format params into a data string to pass into data field of url-encoded form
+
+        Args:
+            params (dict): params to convert.
+
+        Returns:
+            (str): data string to pass into data field of url-encoded form.
+        '''
 
         return '{}={}'.format(self.KLAVIYO_DATA_VARIABLE, quote(json.dumps(params)))
 
@@ -204,15 +212,20 @@ class KlaviyoAPI(object):
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
         return self._request(self.HTTP_GET, url, request_type=self.PUBLIC)
 
-    def _public_post_request(self, url, datastring, headers):
-        """Track and identify calls, always a get request.
+    def _public_post_request(self, url, datastring):
+        """Track and identify calls, always a post request.
 
         Args:
-            path (str): track or identify.
-            querystring (str): urlencoded & b64 encoded string.
+            url (str): endpoint url.
+            datastring (str): to pass into data field of url-encoded form.
         Returns:
             (str): 1 or 0 (pass/fail).
         """
+
+        headers = {
+            "Accept": "text/html",
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
 
         response = requests.request("POST", url, data=datastring, headers=headers)
 

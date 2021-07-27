@@ -79,14 +79,9 @@ class Public(KlaviyoAPI):
 
             url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER,self.TRACK)
 
-            headers = {
-                "Accept": "text/html",
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-
             datastring = self._build_data_string(params)
 
-            return self._public_post_request(url, datastring, headers)
+            return self._public_post_request(url, datastring)
 
         else: # original 'get' case
 
@@ -158,22 +153,17 @@ class Public(KlaviyoAPI):
             'properties': properties
         }
 
-        if method.lower() not in [KlaviyoAPI.HTTP_POST,KlaviyoAPI.HTTP_GET]:
+        if method.lower() not in [KlaviyoAPI.HTTP_POST, KlaviyoAPI.HTTP_GET]:
 
-            raise ValueError('method argument must be either "post" or "get"')
+            raise KlaviyoException('method argument must be either "post" or "get"')
 
         if method == KlaviyoAPI.HTTP_POST:
 
             url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER,self.IDENTIFY)
 
-            headers = {
-                "Accept": "text/html",
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-
             datastring = self._build_data_string(params)
 
-            return self._public_post_request(url, datastring, headers)
+            return self._public_post_request(url, datastring)
 
         else: # original 'get' case
 
