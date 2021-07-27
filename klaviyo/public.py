@@ -46,7 +46,6 @@ class Public(KlaviyoAPI):
         Returns:
             (str): 1 (pass) or 0 (fail).
         """
-
         self._valid_identifiers(email, external_id)
 
         if properties is None:
