@@ -1,7 +1,5 @@
 from .api_helper import KlaviyoAPI
 from .exceptions import KlaviyoException
-from json import dumps
-from requests import request
 try:
    from urllib.parse import quote
 except ImportError:
