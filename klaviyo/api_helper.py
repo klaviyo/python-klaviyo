@@ -126,14 +126,14 @@ class KlaviyoAPI(object):
         })
 
     def _build_data_string(self, params):
-        '''Format params into a data string to pass into data field of url-encoded form
+        """Format params into a data string to pass into data field of url-encoded form.
 
         Args:
-            params (dict): params to convert.
+            params (dict): Params to convert.
 
         Returns:
-            (str): data string to pass into data field of url-encoded form.
-        '''
+            (str): Data string to pass into data field of url-encoded form.
+        """
 
         return "{}={}".format(self.KLAVIYO_DATA_VARIABLE, quote(json.dumps(params)))
 
