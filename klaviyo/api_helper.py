@@ -176,7 +176,6 @@ class KlaviyoAPI(object):
         Raises:
             (KlaviyoConfigurationException): Information as to why the request won't work.
         """
-
         if method not in [self.HTTP_GET, self.HTTP_POST]:
 
             raise KlaviyoConfigurationException("Invalid HTTP method for public request: must be 'get' of 'post'")
