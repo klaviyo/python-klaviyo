@@ -162,7 +162,7 @@ class Public(KlaviyoAPI):
 
         if method == KlaviyoAPI.HTTP_POST:
 
-            url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER,self.IDENTIFY)
+            url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER, self.IDENTIFY)
 
             datastring = self._build_data_string(params)
 
