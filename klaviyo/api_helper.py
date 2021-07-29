@@ -138,7 +138,7 @@ class KlaviyoAPI(object):
         })
 
     def _build_data_string(self, params):
-        """Format params into a data string to pass into data field of url-encoded form.
+        """Format payload params into a data string to pass into data field of url-encoded form.
 
         Args:
             params (dict): Params to convert.
