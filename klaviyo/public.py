@@ -174,7 +174,6 @@ class Public(KlaviyoAPI):
             return self._request(method, url, params=params, data=datastring, request_type=self.PUBLIC, headers=headers)
 
         else: # original 'get' case
-
             query_string = self._build_query_string(params, is_test)
             return self._public_request(self.IDENTIFY, query_string)
 
