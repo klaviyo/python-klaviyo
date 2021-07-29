@@ -69,21 +69,17 @@ class Public(KlaviyoAPI):
         if ip_address:
             params['ip'] = ip_address
 
-        if method.lower() not in [KlaviyoAPI.HTTP_POST, KlaviyoAPI.HTTP_GET]:
-            raise KlaviyoException('method argument must be either "post" or "get"')
+        method = method.lower()
+
+        self._is_valid_public_method(method)
 
         if method == KlaviyoAPI.HTTP_POST:
 
-            url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER,self.TRACK)
+            url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER, self.TRACK)
 
             datastring = self._build_data_string(params)
 
-            headers = {
-                "Accept": "text/html",
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-
-            return self._request(method, url, params=params, data=datastring, request_type=self.PUBLIC, headers=headers)
+            return self._request(method, url, params=params, data=datastring, request_type=self.PUBLIC, headers=self.POST_HEADERS)
 
         else: # original 'get' case
 
@@ -155,9 +151,9 @@ class Public(KlaviyoAPI):
             'properties': properties
         }
 
-        if method.lower() not in [KlaviyoAPI.HTTP_POST, KlaviyoAPI.HTTP_GET]:
+        method = method.lower()
 
-            raise KlaviyoException('method argument must be either "post" or "get"')
+        self._is_valid_public_method(method)
 
         if method == KlaviyoAPI.HTTP_POST:
 
@@ -165,12 +161,7 @@ class Public(KlaviyoAPI):
 
             datastring = self._build_data_string(params)
 
-            headers = {
-                "Accept": "text/html",
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
-
-            return self._request(method, url, params=params, data=datastring, request_type=self.PUBLIC, headers=headers)
+            return self._request(method, url, params=params, data=datastring, request_type=self.PUBLIC, headers=self.POST_HEADERS)
 
         else: # original 'get' case
             query_string = self._build_query_string(params, is_test)

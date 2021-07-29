@@ -6,6 +6,7 @@ import time
 
 import requests
 import simplejson
+import copy
 
 try:
    from urllib.parse import urlencode, quote
@@ -66,6 +67,17 @@ class KlaviyoAPI(object):
     # SORTING
     SORT_ASC = 'asc'
     SORT_DESC = 'desc'
+
+    # HEADERS
+    BASE_HEADERS = {
+        "Content-Type": "application/json",
+        "User-Agent": "Klaviyo-Python/{}".format(__version__)
+    }
+
+    POST_HEADERS = {
+        "Accept": "text/html",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
 
     def __init__(self, public_token=None, private_token=None, api_server=KLAVIYO_API_SERVER):
         self.public_token = public_token
@@ -155,6 +167,20 @@ class KlaviyoAPI(object):
         if request_type == self.PRIVATE and not self.private_token:
             raise KlaviyoConfigurationException('Private token is not defined')
 
+    def _is_valid_public_method(self, method):
+        """Making sure the HTTP method is valid for public request.
+
+        Args:
+            method (str): method type.
+
+        Raises:
+            (KlaviyoConfigurationException): Information as to why the request won't work.
+        """
+
+        if method not in [self.HTTP_GET, self.HTTP_POST]:
+
+            raise KlaviyoConfigurationException("Invalid HTTP method for public request: must be 'get' of 'post'")
+
     def _v2_request(self, path, method, data={}):
         """Handles the v2 api requests.
 
@@ -212,26 +238,7 @@ class KlaviyoAPI(object):
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
         return self._request(self.HTTP_GET, url, request_type=self.PUBLIC)
 
-    def _public_post_request(self, url, datastring):
-        """Track and identify calls, always a post request.
-
-        Args:
-            url (str): endpoint url.
-            datastring (str): to pass into data field of url-encoded form.
-        Returns:
-            (str): 1 or 0 (pass/fail).
-        """
-
-        headers = {
-            "Accept": "text/html",
-            "Content-Type": "application/x-www-form-urlencoded"
-        }
-
-        response = requests.request("POST", url, data=datastring, headers=headers)
-
-        return KlaviyoAPIResponse(response.status_code, response.json())
-
-    def _request(self, method, url, params=None, data=None, request_type=PRIVATE, headers=None):
+    def _request(self, method, url, params=None, data=None, request_type=PRIVATE, headers={}):
         """Executes the request being made.
 
         Args:
@@ -244,15 +251,12 @@ class KlaviyoAPI(object):
         """
         self._is_valid_request_option(request_type=request_type)
 
-        if headers is None:
-            headers = {
-                'Content-Type': 'application/json',
-                'User-Agent': 'Klaviyo-Python/{}'.format(__version__)
-            }
+        request_headers = copy.deepcopy(self.BASE_HEADERS)
+        request_headers.update(headers)
 
         response = getattr(requests, method.lower())(
             url,
-            headers=headers,
+            headers=request_headers,
             params=params,
             data=data
         )
