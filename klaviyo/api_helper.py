@@ -135,7 +135,7 @@ class KlaviyoAPI(object):
             (str): data string to pass into data field of url-encoded form.
         '''
 
-        return '{}={}'.format(self.KLAVIYO_DATA_VARIABLE, quote(json.dumps(params)))
+        return "{}={}".format(self.KLAVIYO_DATA_VARIABLE, quote(json.dumps(params)))
 
     #####################
     # API HELPER FUNCTIONS
@@ -309,4 +309,3 @@ class KlaviyoAPI(object):
                     status_code=status_code,
                     response=response
                )
-
