@@ -70,7 +70,6 @@ class Public(KlaviyoAPI):
             params['ip'] = ip_address
 
         if method.lower() not in [KlaviyoAPI.HTTP_POST, KlaviyoAPI.HTTP_GET]:
-
             raise KlaviyoException('method argument must be either "post" or "get"')
 
         if method == KlaviyoAPI.HTTP_POST:
