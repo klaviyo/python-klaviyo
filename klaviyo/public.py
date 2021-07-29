@@ -65,22 +65,7 @@ class Public(KlaviyoAPI):
         if ip_address:
             params['ip'] = ip_address
 
-        method = method.lower()
-
-        self._is_valid_public_method(method)
-
-        if method == KlaviyoAPI.HTTP_POST:
-
-            url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER, self.TRACK)
-
-            datastring = self._build_data_string(params)
-
-            return self._request(method, url, params=params, data=datastring, request_type=self.PUBLIC, headers=self.POST_HEADERS)
-
-        else: # original 'get' case
-
-            query_string = self._build_query_string(params, is_test)
-            return self._public_request(self.TRACK, query_string)
+        return self._public_post_request(method=method, params=params, path=self.TRACK, is_test=is_test)
 
     def track_once(
         self, 
@@ -147,21 +132,7 @@ class Public(KlaviyoAPI):
             'properties': properties
         }
 
-        method = method.lower()
-
-        self._is_valid_public_method(method)
-
-        if method == KlaviyoAPI.HTTP_POST:
-
-            url = "{}/{}".format(KlaviyoAPI.KLAVIYO_API_SERVER, self.IDENTIFY)
-
-            datastring = self._build_data_string(params)
-
-            return self._request(method, url, params=params, data=datastring, request_type=self.PUBLIC, headers=self.POST_HEADERS)
-
-        else: # original 'get' case
-            query_string = self._build_query_string(params, is_test)
-            return self._public_request(self.IDENTIFY, query_string)
+        return self._public_post_request(method=method, params=params, path=self.IDENTIFY, is_test=is_test)
 
     @staticmethod
     def _valid_identifiers(email=None, external_id=None):

@@ -238,6 +238,35 @@ class KlaviyoAPI(object):
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
         return self._request(self.HTTP_GET, url, request_type=self.PUBLIC)
 
+    def _public_post_request(self, method=HTTP_GET, params=None, path=None, is_test=False):
+        """Executes the request being made.
+
+        Args:
+            method (str): Type of HTTP request.
+            url (str): URL to make the request to.
+            params (dict or json): Body of the request.
+        Returns:
+            (str, dict): Public returns 1 or 0  (pass/fail).
+                        v1/v2 returns (dict, list).
+        """
+        method = method.lower()
+
+        self._is_valid_public_method(method)
+
+        if method == self.HTTP_POST:
+
+            url = "{}/{}".format(self.KLAVIYO_API_SERVER, path)
+
+            datastring = self._build_data_string(params)
+
+            return self._request(method, url, data=datastring, request_type=self.PUBLIC, headers=self.POST_HEADERS)
+
+        else: # original 'get' case
+
+            query_string = self._build_query_string(params, is_test)
+            return self._public_request(path, query_string)
+
+
     def _request(self, method, url, params=None, data=None, request_type=PRIVATE, headers={}):
         """Executes the request being made.
 
