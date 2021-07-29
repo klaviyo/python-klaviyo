@@ -247,7 +247,6 @@ class KlaviyoAPI(object):
                         v1/v2 returns (dict, list).
         """
         method = method.lower()
-
         self._is_valid_public_method(method)
 
         if method == self.HTTP_POST:
