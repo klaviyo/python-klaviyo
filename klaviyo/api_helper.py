@@ -235,7 +235,7 @@ class KlaviyoAPI(object):
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
         return self._request(self.HTTP_GET, url, request_type=self.PUBLIC)
 
-    def _public_post_request(self, method=HTTP_GET, params=None, path=None, is_test=False):
+    def _public_post_request(self, method=HTTP_GET, params={}, path=None, is_test=False):
         """Executes the request being made.
 
         Args:
