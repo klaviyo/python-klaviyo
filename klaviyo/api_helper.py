@@ -256,6 +256,7 @@ class KlaviyoAPI(object):
             datastring = self._build_data_string(params)
 
             return self._request(method, url, data=datastring, request_type=self.PUBLIC, headers=self.POST_HEADERS)
+
         else: # original 'get' case
 
             query_string = self._build_query_string(params, is_test)
