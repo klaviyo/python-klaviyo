@@ -235,22 +235,22 @@ class KlaviyoAPI(object):
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
         return self._request(self.HTTP_GET, url, request_type=self.PUBLIC)
 
-    def _public_post_request(self, method=HTTP_GET, params={}, path=None, is_test=False):
-        """Executes the request being made.
+    def _track_identify_request(self, method=HTTP_GET, params={}, resource=None, is_test=False):
+        """Executes the request being made, and returns response
 
         Args:
             method (str): Type of HTTP request.
-            url (str): URL to make the request to.
-            params (dict or json): Body of the request.
+            params (dict): payload params for request.
+            path (str): path of endpoint.
+            is_test (boolean): to turn on/off test mode
         Returns:
-            (str, dict): Public returns 1 or 0  (pass/fail).
-                        v1/v2 returns (dict, list).
+            (str): 1 or 0
         """
         method = method.lower()
         self._is_valid_public_method(method)
 
         if method == self.HTTP_POST:
-            url = "{}/{}".format(self.KLAVIYO_API_SERVER, path)
+            url = "{}/{}".format(self.KLAVIYO_API_SERVER, resource)
 
             datastring = self._build_data_string(params)
 
@@ -258,8 +258,7 @@ class KlaviyoAPI(object):
 
         else: # original 'get' case
             query_string = self._build_query_string(params, is_test)
-            return self._public_request(path, query_string)
-
+            return self._public_request(resource, query_string)
 
     def _request(self, method, url, params=None, data=None, request_type=PRIVATE, headers={}):
         """Executes the request being made.

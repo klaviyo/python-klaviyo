@@ -65,7 +65,7 @@ class Public(KlaviyoAPI):
         if ip_address:
             params['ip'] = ip_address
 
-        return self._public_post_request(method=method, params=params, path=self.TRACK, is_test=is_test)
+        return self._track_identify_request(method=method, params=params, resource=self.TRACK, is_test=is_test)
 
     def track_once(
         self, 
@@ -132,7 +132,7 @@ class Public(KlaviyoAPI):
             'properties': properties
         }
 
-        return self._public_post_request(method=method, params=params, path=self.IDENTIFY, is_test=is_test)
+        return self._track_identify_request(method=method, params=params, resource=self.IDENTIFY, is_test=is_test)
 
     @staticmethod
     def _valid_identifiers(email=None, external_id=None):
