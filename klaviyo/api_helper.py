@@ -250,7 +250,6 @@ class KlaviyoAPI(object):
         self._is_valid_public_method(method)
 
         if method == self.HTTP_POST:
-
             url = "{}/{}".format(self.KLAVIYO_API_SERVER, path)
 
             datastring = self._build_data_string(params)
