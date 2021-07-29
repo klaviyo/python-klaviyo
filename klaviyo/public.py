@@ -1,9 +1,5 @@
 from .api_helper import KlaviyoAPI
 from .exceptions import KlaviyoException
-try:
-   from urllib.parse import quote
-except ImportError:
-   from urllib import quote
 
 class Public(KlaviyoAPI):
     # PUBLIC API PATHS
