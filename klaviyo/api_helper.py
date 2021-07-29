@@ -146,7 +146,6 @@ class KlaviyoAPI(object):
         Returns:
             (str): Data string to pass into data field of url-encoded form.
         """
-
         return "{}={}".format(self.KLAVIYO_DATA_VARIABLE, quote(json.dumps(params)))
 
     #####################
