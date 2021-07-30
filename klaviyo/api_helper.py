@@ -6,11 +6,12 @@ import time
 
 import requests
 import simplejson
+import copy
 
 try:
-   from urllib.parse import urlencode
+   from urllib.parse import urlencode, quote
 except ImportError:
-   from urllib import urlencode
+   from urllib import urlencode, quote
 
 from .exceptions import (
     KlaviyoAPIException,
@@ -66,6 +67,17 @@ class KlaviyoAPI(object):
     # SORTING
     SORT_ASC = 'asc'
     SORT_DESC = 'desc'
+
+    # HEADERS
+    BASE_HEADERS = {
+        "Content-Type": "application/json",
+        "User-Agent": "Klaviyo-Python/{}".format(__version__)
+    }
+
+    POST_HEADERS = {
+        "Accept": "text/html",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
 
     def __init__(self, public_token=None, private_token=None, api_server=KLAVIYO_API_SERVER):
         self.public_token = public_token
@@ -125,6 +137,17 @@ class KlaviyoAPI(object):
             'test': 1 if is_test else 0,
         })
 
+    def _build_data_string(self, params):
+        """Format payload params into a data string to pass into data field of url-encoded form.
+
+        Args:
+            params (dict): Params to convert.
+
+        Returns:
+            (str): Data string to pass into data field of url-encoded form.
+        """
+        return "{}={}".format(self.KLAVIYO_DATA_VARIABLE, quote(json.dumps(params)))
+
     #####################
     # API HELPER FUNCTIONS
     #####################
@@ -142,6 +165,18 @@ class KlaviyoAPI(object):
 
         if request_type == self.PRIVATE and not self.private_token:
             raise KlaviyoConfigurationException('Private token is not defined')
+
+    def _is_valid_public_method(self, method):
+        """Making sure the HTTP method is valid for public request.
+
+        Args:
+            method (str): method type.
+
+        Raises:
+            (KlaviyoConfigurationException): Information as to why the request won't work.
+        """
+        if method not in (self.HTTP_GET, self.HTTP_POST):
+            raise KlaviyoConfigurationException("Invalid HTTP method for public request: must be 'get' of 'post'")
 
     def _v2_request(self, path, method, data={}):
         """Handles the v2 api requests.
@@ -200,7 +235,32 @@ class KlaviyoAPI(object):
         url = '{}/{}?{}'.format(self.api_server, path, querystring)
         return self._request(self.HTTP_GET, url, request_type=self.PUBLIC)
 
-    def _request(self, method, url, params=None, data=None, request_type=PRIVATE):
+    def _track_identify_request(self, method=HTTP_GET, params=None, resource=None, is_test=False):
+        """Executes the request being made, and returns response
+
+        Args:
+            method (str): Type of HTTP request.
+            params (dict): payload params for request.
+            path (str): path of endpoint.
+            is_test (boolean): to turn on/off test mode
+        Returns:
+            (str): 1 or 0
+        """
+        method = method.lower()
+        self._is_valid_public_method(method)
+
+        if method == self.HTTP_POST:
+            url = "{}/{}".format(self.KLAVIYO_API_SERVER, resource)
+
+            datastring = self._build_data_string(params)
+
+            return self._request(method, url, data=datastring, request_type=self.PUBLIC, headers=self.POST_HEADERS)
+
+        else: # original 'get' case
+            query_string = self._build_query_string(params, is_test)
+            return self._public_request(resource, query_string)
+
+    def _request(self, method, url, params=None, data=None, request_type=PRIVATE, headers={}):
         """Executes the request being made.
 
         Args:
@@ -212,13 +272,13 @@ class KlaviyoAPI(object):
                         v1/v2 returns (dict, list).
         """
         self._is_valid_request_option(request_type=request_type)
-        headers = {
-            'Content-Type': 'application/json',
-            'User-Agent': 'Klaviyo-Python/{}'.format(__version__)
-        }
+
+        request_headers = copy.deepcopy(self.BASE_HEADERS)
+        request_headers.update(headers)
+
         response = getattr(requests, method.lower())(
             url,
-            headers=headers,
+            headers=request_headers,
             params=params,
             data=data
         )
@@ -275,4 +335,3 @@ class KlaviyoAPI(object):
                     status_code=status_code,
                     response=response
                )
-

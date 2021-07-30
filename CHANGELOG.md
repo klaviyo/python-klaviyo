@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### [Unreleased]
+
+### [3.1.4]
+- Add support for POST request to track/identify endpoints.
+
 ### 3.1.3
 - Fix identify ID call.
 
@@ -27,3 +32,6 @@
 
 ### 2.4
 - As this changelog was created after 3.0, please refer to the README for version 2 https://github.com/klaviyo/python-klaviyo/tree/99be1d36941b2b48561575eda16e25224ce91367
+
+[Unreleased]: https://github.com/klaviyo/python-klaviyo/compare/3.1.4...HEAD
+[3.1.4]: https://github.com/klaviyo/python-klaviyo/compare/3.1.3...3.1.4
