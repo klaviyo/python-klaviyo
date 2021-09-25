@@ -63,6 +63,8 @@ class KlaviyoAPI(object):
     EMAIL = 'email'
     SINCE = 'since'
     MARKER = 'marker'
+    PHONE_NUMBERS = 'phone_numbers'
+    PUSH_TOKENS = 'push_tokens'
 
     # SORTING
     SORT_ASC = 'asc'

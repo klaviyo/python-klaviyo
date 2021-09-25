@@ -120,24 +120,32 @@ You can create, update, read, and delete lists.  See here for more information h
         profiles: is list of objects formatted like {'email': EMAIL, 'custom_property': NAME}
      
     # Check email address subscription status to a list
-    client.Lists.get_subscribers_from_list(list_id, emails)
+    client.Lists.get_subscribers_from_list(list_id, emails, phone_numbers, push_tokens)
         emails: is a list of email addresses
+        phone_numbers: is a list of phone numbers (as strings)
+        push_tokens: is a list of push tokens
     
     # Unsubscribe and remove profile from a list
-    client.Lists.delete_subscribers_from_list(list_id, emails)
+    client.Lists.delete_subscribers_from_list(list_id, emails, phone_numbers, push_tokens)
         emails: is a list of email addresses 
+        phone_numbers: is a list of phone numbers (as strings)
+        push_tokens: is a list of push tokens
 
     # Add members to a list, this doesn't care about the list double opt in setting
     client.Lists.add_members_to_list(list_id, profiles)
         profiles: is list of objects formatted like {'email': EMAIL, 'custom_property': NAME}
         
     # Check email addresses if they're in a list
-    client.Lists.get_members_from_list(list_id_, emails)
+    client.Lists.get_members_from_list(list_id_, emails, phone_numbers, push_tokens)
         emails: is a list of email addresses
+        phone_numbers: a list of phone numbers (as strings)
+        push_tokens: a list of push tokens
      
     # Remove emails from a list
-    client.Lists.remove_members_from_list(list_id, emails)
+    client.Lists.remove_members_from_list(list_id, emails, phone_numbers, push_tokens)
         emails:  a list of email addresses
+        phone_numbers: a list of phone numbers (as strings)
+        push_tokens: a list of push tokens
     
     # get exclusion emails from a list - marker is used for paginating
     client.Lists.get_list_exclusions(list_id, marker=None)

@@ -102,7 +102,7 @@ class Lists(KlaviyoAPI):
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_POST, params)
 
-    def get_subscribers_from_list(self, list_id, emails):
+    def get_subscribers_from_list(self, list_id, emails, phone_numbers=[], push_tokens=[]):
         """Check if profiles are on a list and not suppressed.
 
         https://www.klaviyo.com/docs/api/v2/lists#get-subscribe
@@ -115,12 +115,14 @@ class Lists(KlaviyoAPI):
             (list) Profiles that are subscribed.
         """
         params = {
-            self.EMAILS: emails
+            self.EMAILS: emails,
+            self.PHONE_NUMBERS: phone_numbers,
+            self.PUSH_TOKENS: push_tokens
         }
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_GET, params)
 
-    def delete_subscribers_from_list(self, list_id, emails):
+    def delete_subscribers_from_list(self, list_id, emails, phone_numbers=[], push_tokens=[]):
         """Delete and remove profiles from list.
 
         https://www.klaviyo.com/docs/api/v2/lists#delete-subscribe
@@ -128,12 +130,16 @@ class Lists(KlaviyoAPI):
         Args:
             list_id (str): The list id.
             emails (list): A list of email addresses.
+            phone_numbers (list): A list of phone numbers
+            push_tokens (list): A list of push tokens
 
         Returns:
             Empty str if successful.
         """
         params = {
-            self.EMAILS: emails
+            self.EMAILS: emails,
+            self.PHONE_NUMBERS: phone_numbers,
+            self.PUSH_TOKENS: push_tokens
         }
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.SUBSCRIBE), self.HTTP_DELETE, params)
@@ -159,7 +165,7 @@ class Lists(KlaviyoAPI):
         }
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_POST, params)
 
-    def get_members_from_list(self, list_id, emails):
+    def get_members_from_list(self, list_id, emails, phone_numbers=[], push_tokens=[]):
         """Check if profiles are on a list.
 
         https://www.klaviyo.com/docs/api/v2/lists#get-members
@@ -167,17 +173,21 @@ class Lists(KlaviyoAPI):
         Args:
             list_id (str): The list id.
             emails (list): A list of email addresses.
+            phone_numbers (list): A list of phone numbers.
+            push_tokens (list): A list of push tokens.
 
         Returns:
-            (list) of dicts corresponding to the email addresses on their list if they're on the list.
+            (list) of dicts corresponding to the email addresses, phone_numbers and push_tokens on their list if they're on the list.
         """
         params = {
-            self.EMAILS: emails
+            self.EMAILS: emails,
+            self.PHONE_NUMBERS: phone_numbers,
+            self.PUSH_TOKENS: push_tokens
         }
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_GET, params)
 
-    def remove_members_from_list(self, list_id, emails):
+    def remove_members_from_list(self, list_id, emails, phone_numbers=[], push_tokens=[]):
         """Remove profiles from a list.
 
         https://www.klaviyo.com/docs/api/v2/lists#delete-members
@@ -185,12 +195,16 @@ class Lists(KlaviyoAPI):
         Args:
             list_id (str): Klaviyo list id.
             emails (list): A list of email addresses.
+            phone_numbers (list): A list of phone numbers.
+            push_tokens (list): A list of push tokens.
 
         Returns:
             Empty str if successful.
         """
         params = {
-            self.EMAILS: emails
+            self.EMAILS: emails,
+            self.PHONE_NUMBERS: phone_numbers,
+            self.PUSH_TOKENS: push_tokens
         }
 
         return self._v2_request('{}/{}/{}'.format(self.LIST, list_id, self.MEMBERS), self.HTTP_DELETE, params)
