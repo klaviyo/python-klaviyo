@@ -1,3 +1,51 @@
+# python-klaviyo - RETIRED
+
+## Deprecation Notice
+
+This SDK and its associated [pip package](https://pypi.org/project/klaviyo/) is set to be deprecated on 2023-01-01 and will not receive further updates. To continue receiving API and SDK improvements, please follow the instructions below to migrate to the new [Klaviyo Python SDK](https://github.com/klaviyo/klaviyo-python-sdk).
+
+## Migration Instructions
+
+NOTE: this change is not backwards compatible; migrating to the new SDK requires completing the following steps:
+
+### Install New SDK
+
+`pip install klaviyo-sdk`
+
+OR
+
+`pip3 install klaviyo-sdk`
+
+### Update Import 
+
+From:
+```python
+import klaviyo
+```
+
+To:
+ ```python
+ import klaviyo_sdk
+ ```
+
+### Update Client Instantiation
+
+from:
+```python
+client = klaviyo.Klaviyo(public_token=PUBLIC_TOKEN, private_token=PRIVATE_TOKEN)
+```
+
+from:
+```python
+client = klaviyo_sdk.Client(api_key=PRIVATE_TOKEN)
+```
+
+### Updating API Operations
+
+The new API has many name changes to both namespace and parameters (types+format). Please reference [this section](https://github.com/klaviyo/klaviyo-python-sdk#comprehensive-list-of-operations--parameters) of the new SDK repo for details on how to update each operation.
+
+
+
 ## What is Klaviyo?
 
 Klaviyo is a real-time service for understanding your customers by aggregating all your customer data, identifying important groups of customers and then taking action.

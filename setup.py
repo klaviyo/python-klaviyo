@@ -12,15 +12,11 @@ setup(
 
     # metadata for upload to PyPI
     author = 'Klaviyo',
-    author_email = 'successengineers@klaviyo.com',
-    description = "Python API for Klaviyo",
+    author_email = 'developers@klaviyo.com',
+    description = "Deprecated Klaviyo SDK",
     long_description = (
 """
-Klaviyo is a real-time service for understanding your customers by aggregating
-all your customer data, identifying important groups of customers
-and then taking action.
-
-Find out more at http://www.klaviyo.com
+Deprecation Notice: This package is set to be deprecated on 2023-01-01 and will not receive further updates. To continue receiving API and SDK improvements, we recommend switching over to our latest package/sdk: https://pypi.org/project/klaviyo-sdk/
 """
     ),
     license = 'MIT License',
