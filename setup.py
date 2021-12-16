@@ -16,7 +16,7 @@ setup(
     description = "Deprecated Klaviyo SDK",
     long_description = (
 """
-Deprecation Notice: This package is set to be deprecated on 2023-01-01 and will not receive further updates. To continue receiving API and SDK improvements, we recommend switching over to following pip package: https://pypi.org/project/klaviyo-sdk/
+Deprecation Notice: This package is set to be deprecated on 2023-01-01 and will not receive further updates. To continue receiving API and SDK improvements, we recommend switching over to our latest package/sdk: https://pypi.org/project/klaviyo-sdk/
 """
     ),
     license = 'MIT License',
