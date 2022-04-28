@@ -30,23 +30,26 @@ To:
 
 ### Update Client Instantiation
 
-from:
+From:
 ```python
 client = klaviyo.Klaviyo(public_token=PUBLIC_TOKEN, private_token=PRIVATE_TOKEN)
 ```
 
-from:
+To:
 ```python
 client = klaviyo_sdk.Client(api_key=PRIVATE_TOKEN)
 ```
 
-### Updating API Operations
+### Updating SDK Calls
 
-The new API has many name changes to both namespace and parameters (types+format). Please reference [this section](https://github.com/klaviyo/klaviyo-python-sdk#comprehensive-list-of-operations--parameters) of the new SDK repo for details on how to update each operation.
+The new SDK has many changes to the namespace (resource and function names), parameters (names, types, and format), and error handling. Please reference [this section](https://github.com/klaviyo/klaviyo-python-sdk#comprehensive-list-of-operations--parameters) of the new SDK repo for details on how to update each operation.
+
+### Multistore limitation
+
+The new SDK currently sets API keys at a global environment level. This means that if you manage multiple stores, each store's client must be running in a different environment. We plan to update this behavior to better support multistore applications.
 
 
-
-## What is Klaviyo?
+# What is Klaviyo?
 
 Klaviyo is a real-time service for understanding your customers by aggregating all your customer data, identifying important groups of customers and then taking action.
 http://www.klaviyo.com/
