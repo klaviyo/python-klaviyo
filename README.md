@@ -2,7 +2,7 @@
 
 ## Deprecation Notice
 
-This SDK and its associated [pip package](https://pypi.org/project/klaviyo/) is set to be deprecated on 2023-01-01 and will not receive further updates. To continue receiving API and SDK improvements, please follow the instructions below to migrate to the new [Klaviyo Python SDK](https://github.com/klaviyo/klaviyo-python-sdk).
+This SDK and its associated [pip package](https://pypi.org/project/klaviyo/) is set to be deprecated on April 1st 2023 and will not receive further updates. To continue receiving API and SDK improvements, please follow the instructions below to migrate to the new [Klaviyo Python SDK](https://github.com/klaviyo/klaviyo-python-sdk).
 
 ## Migration Instructions
 
