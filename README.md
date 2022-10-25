@@ -1,10 +1,16 @@
-# python-klaviyo - RETIRED
+# python-klaviyo - DEPRECATED
 
-## Deprecation Notice
+# Deprecation Notice
 
-This SDK and its associated [pip package](https://pypi.org/project/klaviyo/) is set to be deprecated on April 1st 2023 and will not receive further updates. To continue receiving API and SDK improvements, please follow the instructions below to migrate to the new [Klaviyo Python SDK](https://github.com/klaviyo/klaviyo-python-sdk).
+This SDK and its associated pip package are set to be deprecated on April 1st 2023 and will not receive further updates.
 
-## Migration Instructions
+We recommend migrating over to our [newest SDK](https://github.com/klaviyo/klaviyo-api-python).
+
+You can read more about our SDK release history and support [here](https://developers.klaviyo.com/en/docs/sdk_overview)
+
+For a comparison between our old and new APIs, check out [this guide](https://developers.klaviyo.com/en/docs/apis_comparison_chart).
+
+<!-- ## Migration Instructions
 
 NOTE: this change is not backwards compatible; migrating to the new SDK requires completing the following steps:
 
@@ -46,7 +52,7 @@ The new SDK has many changes to the namespace (resource and function names), par
 
 ### Multistore limitation
 
-The new SDK currently sets API keys at a global environment level. This means that if you manage multiple stores, each store's client must be running in a different environment. We plan to update this behavior to better support multistore applications.
+The new SDK currently sets API keys at a global environment level. This means that if you manage multiple stores, each store's client must be running in a different environment. We plan to update this behavior to better support multistore applications. -->
 
 
 # What is Klaviyo?
