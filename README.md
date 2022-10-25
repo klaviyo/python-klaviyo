@@ -1,52 +1,14 @@
-# python-klaviyo - RETIRED
+# python-klaviyo - DEPRECATED
 
-## Deprecation Notice
+# Deprecation Notice
 
-This SDK and its associated [pip package](https://pypi.org/project/klaviyo/) is set to be deprecated on April 1st 2023 and will not receive further updates. To continue receiving API and SDK improvements, please follow the instructions below to migrate to the new [Klaviyo Python SDK](https://github.com/klaviyo/klaviyo-python-sdk).
+This SDK and its associated pip package are set to be deprecated on April 1st 2023 and will not receive further updates.
 
-## Migration Instructions
+We recommend migrating over to our [newest SDK](https://github.com/klaviyo/klaviyo-api-python).
 
-NOTE: this change is not backwards compatible; migrating to the new SDK requires completing the following steps:
+You can read more about our SDK release history and support [here](https://developers.klaviyo.com/en/docs/sdk_overview)
 
-### Install New SDK
-
-`pip install klaviyo-sdk`
-
-OR
-
-`pip3 install klaviyo-sdk`
-
-### Update Import 
-
-From:
-```python
-import klaviyo
-```
-
-To:
- ```python
- import klaviyo_sdk
- ```
-
-### Update Client Instantiation
-
-From:
-```python
-client = klaviyo.Klaviyo(public_token=PUBLIC_TOKEN, private_token=PRIVATE_TOKEN)
-```
-
-To:
-```python
-client = klaviyo_sdk.Client(api_key=PRIVATE_TOKEN)
-```
-
-### Updating SDK Calls
-
-The new SDK has many changes to the namespace (resource and function names), parameters (names, types, and format), and error handling. Please reference [this section](https://github.com/klaviyo/klaviyo-python-sdk#comprehensive-list-of-operations--parameters) of the new SDK repo for details on how to update each operation.
-
-### Multistore limitation
-
-The new SDK currently sets API keys at a global environment level. This means that if you manage multiple stores, each store's client must be running in a different environment. We plan to update this behavior to better support multistore applications.
+For a comparison between our old and new APIs, check out [this guide](https://developers.klaviyo.com/en/docs/apis_comparison_chart).
 
 
 # What is Klaviyo?
