@@ -10,50 +10,6 @@ You can read more about our SDK release history and support [here](https://devel
 
 For a comparison between our old and new APIs, check out [this guide](https://developers.klaviyo.com/en/docs/apis_comparison_chart).
 
-<!-- ## Migration Instructions
-
-NOTE: this change is not backwards compatible; migrating to the new SDK requires completing the following steps:
-
-### Install New SDK
-
-`pip install klaviyo-sdk`
-
-OR
-
-`pip3 install klaviyo-sdk`
-
-### Update Import 
-
-From:
-```python
-import klaviyo
-```
-
-To:
- ```python
- import klaviyo_sdk
- ```
-
-### Update Client Instantiation
-
-From:
-```python
-client = klaviyo.Klaviyo(public_token=PUBLIC_TOKEN, private_token=PRIVATE_TOKEN)
-```
-
-To:
-```python
-client = klaviyo_sdk.Client(api_key=PRIVATE_TOKEN)
-```
-
-### Updating SDK Calls
-
-The new SDK has many changes to the namespace (resource and function names), parameters (names, types, and format), and error handling. Please reference [this section](https://github.com/klaviyo/klaviyo-python-sdk#comprehensive-list-of-operations--parameters) of the new SDK repo for details on how to update each operation.
-
-### Multistore limitation
-
-The new SDK currently sets API keys at a global environment level. This means that if you manage multiple stores, each store's client must be running in a different environment. We plan to update this behavior to better support multistore applications. -->
-
 
 # What is Klaviyo?
 
