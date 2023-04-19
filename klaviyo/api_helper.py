@@ -20,6 +20,9 @@ from .exceptions import (
     KlaviyoServerError,
 )
 from klaviyo import __version__
+import warnings
+
+warnings.warn("This SDK is being deprecated on 2024-01-01, please switch to our newest SDK here: https://github.com/klaviyo/klaviyo-api-python", DeprecationWarning)
 
 
 class KlaviyoAPIResponse(object):

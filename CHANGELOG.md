@@ -1,6 +1,7 @@
 ## CHANGELOG
 
-### [Unreleased]
+### [3.1.7]
+- Deprecation notice
 
 ### [3.1.4]
 - Add support for POST request to track/identify endpoints.
